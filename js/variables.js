@@ -7,8 +7,9 @@ var prac_blocks = [1,2,3,4];
 var state = [0,0,0,1,1,0,0,1,1,1,0,0,1,1,1,1,0,0,0,1,0,1,0,1,0,1];
 var s = shuffle(state);
 var counter = 1;
-// key_presses for two reward states r0 and r1. r0 is when the patch on the left (key_press = 37) is more rewarding and vice versa for r1.
-// Two reward continengencies of 70-30 and 90-10
+
+// key_presses for two reward states r0 and r1. r0 is when the patch on the left (key_press = arrowleft) is more rewarding and vice versa for r1.
+// Two reward continengencies of 60-40 and 90-10
 // This particular grouping of key_presses allows certain criteria to be maintained so that even when the array is shuffled for every participant, the criterias are not missed.
 var left_60 = [['arrowleft', 'arrowright'],['arrowleft', 'arrowright'],['arrowleft', 'arrowright'],['arrowleft', 'arrowright'],['arrowleft'],['arrowleft'],['arrowleft', 'arrowright'],['arrowleft']];
 var left_90 = [['arrowleft','arrowleft'],['arrowright','arrowleft'],['arrowleft','arrowleft'],['arrowleft','arrowleft'],['arrowleft'],['arrowleft'],['arrowleft'],['arrowleft'],['arrowleft'],['arrowleft']];
