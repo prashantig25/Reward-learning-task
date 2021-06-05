@@ -117,7 +117,7 @@
                 HH.action_s0 = action_s0
                 HH.difference = randbet(high_min_neg, high_min)
                 HH.reward = actionleft_60[jsPsych.currentTrial().action_s0]
-                HH.a = 0
+                HH.a = 0 // reward state i.e. of a = 0, then arrowleft is more profitable and it is vice versa, if a = 1
                 action_s0 = action_s0 + 1;
             }
             else {
