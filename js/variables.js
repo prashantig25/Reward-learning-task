@@ -28,7 +28,7 @@ var actionleft_90 = left_90_s.flat();
 var actionright_60 = right_60_s.flat();
 var actionright_90 = right_90_s.flat();
 
-var index = 0 // Index of the element to serially sample from the list of the rewards.
+var index = 0 // Index of the element to serially sample from the list of the perceptual states.
 var index1 = 0
 var action_s0 = 0;
 var action_s1 = 0;
