@@ -17,26 +17,25 @@
     };
     var fix = {
         type: 'canvas-keyboard-response', stimulus: fixation, trial_duration: fix_dura, choices: jsPsych.NO_KEYS, data: { condition: 'fixation'},
-    };
-    
+    };   
    var prac_block = {
         type: "html-keyboard-response", stimulus: "<p style=\"font-size: 20px;color: #000000\"> Practice Block will begin now. Press any key to start the practice block.</p>",};
     var prac_high_hc_s1 = {
         type: 'canvas-keyboard-response',
         on_start: function(prac_high_hc_s1){ //generates a random contrast level after every trial and it acts as input in the gabor function
-            prac_high_hc_s1.difference = randbet(high_min,high_max)
-            prac_high_hc_s1.contrast_left =  avgcon + jsPsych.currentTrial().difference;
-            prac_high_hc_s1.contrast_right = avgcon - jsPsych.currentTrial().difference;
+            prac_high_hc_s1.difference = randbet(high_min,high_max) // generates the contrast differnece level
+            prac_high_hc_s1.contrast_left =  avgcon + jsPsych.currentTrial().difference; // calculates the left contrast
+            prac_high_hc_s1.contrast_right = avgcon - jsPsych.currentTrial().difference; // calculates the right contrast
         },
         stimulus: gabor, Choices: keys, trial_duration: duration, response_ends_trial: false,
-        on_finish: function (data) {
+        on_finish: function (data) { // stores the data
             data.condition = 'highcon'
             data.state = 0
             data.contrast_left = jsPsych.currentTrial().contrast_left
             data.contrast_right = jsPsych.currentTrial().contrast_right
             data.diff = jsPsych.currentTrial().difference
-            data.corr_resp = 'arrowleft'
-            if (data.response === data.corr_resp) {
+            data.corr_resp = 'arrowleft' // correct response for this trial 
+            if (data.response === data.corr_resp) { // comparing the correct response with the participant's response
                 data.correct = true;
             } else {
                 data.correct = false;
@@ -109,7 +108,6 @@
             }
         },
     };
-
     var prac_high_lc_s1 = {
         type: 'canvas-keyboard-response',
         on_start: function(prac_high_lc_s1){ //generates a random contrast level after every trial and it acts as input in the gabor function
@@ -198,7 +196,6 @@
             }
         },
     };
-
     var fb = {
         type: 'html-keyboard-response', choices: jsPsych.NO_KEYS, trial_duration: duration,
         stimulus: function () {
@@ -210,7 +207,6 @@
             }
         }
     };
-
     var stim_high_s0_lc = { timeline: [fix, prac_high_lc_s0, fb] };
     var stim_high_s1_lc = { timeline: [fix, prac_high_lc_s1, fb] };
     var stim_low_s0_lc = { timeline: [fix, prac_low_lc_s0, fb] };
