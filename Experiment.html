@@ -21,7 +21,6 @@
             {prompt: "Please enter your correct unique Prolific ID here.", name: 'Prolific_ID'}],
         button_label:'Next',
     };
-
     var completion_id = {
         type: 'survey-text',
         questions: [
@@ -30,7 +29,6 @@
     var fix = {
         type: 'canvas-keyboard-response', stimulus: fixation, trial_duration: fix_dura, choices: jsPsych.NO_KEYS, data: { condition: 'fixation'},
     };
-   
     var instructions = {
         type: "html-keyboard-response", stimulus: "<p style=\"font-size: 20px;color: #000000\"> Here is a summary of the instructions for the main task.</p>" +
             "<p style=\"font-size: 20px;color: #000000\"> In this task, you will be presented with multiple blocks of trials. A fixation cross which looks like this (+) will precede each trial. Please fixate on the cross before the start of the trial. "+
@@ -44,21 +42,21 @@
     };
     var firstblock = {
         type: "html-keyboard-response",
-        stimulus: "<p style=\"font-size: 25px;color: #000000\"> The first block of trials will begin now. <br> The relationship between the contrast level of the images and reward may change now as compared to previous blocks. <br> Press a key when you are ready.</p>",
+        stimulus: "<p style=\"font-size: 20px;color: #000000\"> The first block of trials will begin now. <br> The relationship between the contrast level of the images and reward may change now as compared to previous blocks. <br> Press a key when you are ready.</p>",
     };
     var nextblock = {
         type: "html-keyboard-response",
-        stimulus: "<p style=\"font-size: 25px;color: #000000\"> Next block begins now. <br> The relationship between the contrast level of the images and reward may change now as compared to previous blocks. <br> Press a key when you are ready.</p>",
+        stimulus: "<p style=\"font-size: 20px;color: #000000\"> Next block begins now. <br> The relationship between the contrast level of the images and reward may change now as compared to previous blocks. <br> Press a key when you are ready.</p>",
     };
     var missed_trial = { // missed trial
-        type: 'canvas-keyboard-response',
-        stimulus: gabor,
-        data: {condition: 'missed'},
+        type: 'canvas-keyboard-response', //jsPsych trial type
+        stimulus: gabor, // gabor drawn based on function
+        data: {condition: 'missed'}, // condition of this trial
         choices: keys, response_ends_trial: false, trial_duration: duration,
         on_start: function(missed_trial) { // This part takes the first elements of the feedback and contrast parameters of the first missed trial.
-            missed_trial.missed_reward = missed_fb.shift()
-            missed_trial.contrast_left = missed_con.shift();
-            missed_trial.contrast_right = missed_con1.shift();
+            missed_trial.missed_reward = missed_fb.shift() // stores the feedback for the first missed trial in the missed trial array
+            missed_trial.contrast_left = missed_con.shift(); // stores the left contrast level for the first missed trial in the missed trial array
+            missed_trial.contrast_right = missed_con1.shift(); // stores the right contrast level for the first missed trial in the missed trial array
         },
         on_finish: function (data) {
             if (data.response === jsPsych.currentTrial().missed_reward) {
@@ -75,7 +73,7 @@
                 data.correct = false;
                 missed.pop() // Once the missed trial has been repeated and the participant has responded, the length of the missed array has to be reduced by 1.
             }
-            data.diff = jsPsych.currentTrial().difference
+            data.diff = jsPsych.currentTrial().difference // contrast difference
             data.corr_resp = jsPsych.currentTrial().missed_reward // Stores the correct response on the said trial.
             data.contrast_left = jsPsych.currentTrial().contrast_left // Stores the contrast of the left patch on the said trial.
             data.contrast_right = jsPsych.currentTrial().contrast_right // Stores the contrast of the rightt patch on the said trial.
@@ -83,7 +81,7 @@
             data.stim = missed.length
             data.tcount = trialcounter
         },
-    }
+    };
     var missed_hl = {timeline: [fix, missed_trial, fb], repetitions: 1} //full trial procedure of a missed trial
     var missed_loop = {   // Runs the loop till the missed array has elements. Stops when the missed array is empty.
         timeline: [missed_hl],
@@ -94,7 +92,7 @@
                 return true;
             }
         },
-    }
+    };
     var missed_conditional = { // first runs the conditional to check if the missed array has any elements. Will skip the missed_loop entirely if the participant has missed no trials in that block.
         timeline: [missed_loop],
         conditional_function: function() {
@@ -104,8 +102,7 @@
                 return false;
             }
         }
-    }
-
+    };
     var HH = {
         type: 'canvas-keyboard-response',
         stimulus: gabor, // generates the two patches for the trial using the gabor function
@@ -113,12 +110,12 @@
         choices: keys, response_ends_trial: false, trial_duration: duration,
         on_start: function(HH){
             HH.index = index // index starts at 0
-            if (s[jsPsych.currentTrial().index] === 0) {
-                HH.action_s0 = action_s0
-                HH.difference = randbet(high_min_neg, high_min)
-                HH.reward = actionleft_60[jsPsych.currentTrial().action_s0]
+            if (s[jsPsych.currentTrial().index] === 0) { // state that the trial belongs to
+                HH.action_s0 = action_s0 
+                HH.difference = randbet(high_min_neg, high_min) // contrast differences for s = 0
+                HH.reward = actionleft_60[jsPsych.currentTrial().action_s0] // picks the correct key press for this trial by serially sampling throug the list using action_s0
                 HH.a = 0 // reward state i.e. of a = 0, then arrowleft is more profitable and it is vice versa, if a = 1
-                action_s0 = action_s0 + 1;
+                action_s0 = action_s0 + 1; // increase the action_s0 by 1 to pick the next element from the action list for the next trial
             }
             else {
                 HH.action_s1 = action_s1
@@ -127,19 +124,19 @@
                 HH.a = 1
                 action_s1 = action_s1 + 1;
             }
-            HH.contrast_left = avgcon + jsPsych.currentTrial().difference
-            HH.contrast_right = avgcon - jsPsych.currentTrial().difference
+            HH.contrast_left = avgcon + jsPsych.currentTrial().difference // calculate the contrast for the left gabor based on this trial's difference 
+            HH.contrast_right = avgcon - jsPsych.currentTrial().difference // calculate the contrast for the right gabor based on this trial's difference 
         },
         on_finish: function (data) {
-            if (data.response === jsPsych.currentTrial().reward) {
+            if (data.response === jsPsych.currentTrial().reward) { // if the participant's key press is the same as the correct key_press
                 data.correct = true;
-                data.stim = 0;
-            } else if (data.response === null) {
+                data.stim = 0; // keeps the stim value at 0 because the participant has not missed a trial
+            } else if (data.response === null) { // if the participant does not respond to a particular trial
                 missed.push(1),
-                    missed_fb.push(jsPsych.currentTrial().reward),
-                    missed_con.push(jsPsych.currentTrial().contrast_left),
-                    missed_con1.push(jsPsych.currentTrial().contrast_right)
-            } else {
+                missed_fb.push(jsPsych.currentTrial().reward),  // add this trial's correct response to the missed_fb array so that it can be repeated with the missed trial
+                missed_con.push(jsPsych.currentTrial().contrast_left), // add this trial's left contrast to the missed_con array so that it can be repeated with the missed trial
+                missed_con1.push(jsPsych.currentTrial().contrast_right) // add this trial's right contrast to the missed_con1 array so that it can be repeated with the missed trial
+            } else { // if the participant's key_press is not the same as correct key_press
                 data.correct = false;
                 data.stim = 0; // keeps the stim value at 0 because the participant has not missed a trial
             }
@@ -148,9 +145,9 @@
             data.contrast_right = jsPsych.currentTrial().contrast_right // stores the contrast level of right patch on this trial
             data.diff = jsPsych.currentTrial().difference
             trialcounter = trialcounter + 3 // increases the trial counter to include fixation, stimulus and feedback
-            index = index + 1;
-            data.state = s[jsPsych.currentTrial().index]
-            data.reward = jsPsych.currentTrial().a
+            index = index + 1; // increase the index by 1 so that the next trial, the next state can be chosen from the state array
+            data.state = s[jsPsych.currentTrial().index] // store the state of the trial
+            data.reward = jsPsych.currentTrial().a // store the action for this trial
         }
     };
     var HH_1 = {
@@ -482,7 +479,6 @@
             data.reward = jsPsych.currentTrial().a
         }
     };
-
     var trial_HH = {timeline: [fix, HH, fb], repetitions: 25, randomize_order: false};
     var trial_HH_1 = {timeline: [fix, HH_1, fb], repetitions: 25, randomize_order: false};
     var trial_HL = {timeline: [fix, HL, fb], repetitions: 25, randomize_order: false};
@@ -491,7 +487,6 @@
     var trial_LH_1 = {timeline: [fix, LH_1, fb], repetitions: 25, randomize_order: false};
     var trial_LL = {timeline: [fix, LL, fb], repetitions: 25, randomize_order: false};
     var trial_LL_1 = {timeline: [fix, LL_1, fb], repetitions: 25, randomize_order: false};
-
     // shows the number of points at the end of one block and block counter
     var score = {
         type: 'html-keyboard-response',
@@ -506,10 +501,10 @@
             data.finalscore = jsPsych.currentTrial().total // final score after each block
             trialcounter = 0 // trial counter resets to 0 after a block ends because the trialcounter counts the number of points in each block seperately
             index = 0 // index of rewards also resets to 0 after a block ends
-            action_s0 = 0;
+            action_s0 = 0; // resets this variable to 0 for the next block
             action_s1 = 0;
             counter = counter + 1; // Increase the counter by one when a fresh block of trials start.
-            s = shuffle(state);
+            s = shuffle(state); // shuffles the state array
         }
     };
     var end = {
@@ -519,8 +514,6 @@
             return `<p style=\"font-size: 25px;color: #000000\"> You win <strong> ${finalpoints} </strong> points in the experiment. <br>You have reached the end of the study. Thanks for participating! </p>,`
         }
     };
-    
-  
     var block1 = {timeline: [trial_HL, missed_conditional, score, nextblock], repetitions: 1};
     var block2 = {timeline: [trial_LH, missed_conditional, score, nextblock], repetitions: 1};
     var block3 = {timeline: [trial_LH_1, missed_conditional, score, nextblock], repetitions: 1};
@@ -529,11 +522,9 @@
     var block6 = {timeline: [trial_LL_1, missed_conditional, score,nextblock], repetitions: 1};
     var block7 = {timeline: [trial_LL, missed_conditional, score, nextblock], repetitions: 1};
     var block8 = {timeline: [trial_HH, missed_conditional, score], repetitions: 1};
-
     var blockarray = [block1, block7, block6, block5, block4, block3, block2];
-    var blocks = {timeline: jsPsych.randomization.shuffle(blockarray)};
-    var blocks_shuffled = {timeline: jsPsych.randomization.shuffle(blockarray)};
-
+    var blocks = {timeline: jsPsych.randomization.shuffle(blockarray)}; // first set of blocks
+    var blocks_shuffled = {timeline: jsPsych.randomization.shuffle(blockarray)}; // second set of blocks
     timeline.push(welcome);
     timeline.push(survey_id);
     timeline.push(instructions);
