@@ -10,110 +10,21 @@
 
 var debrief = [
         {
-            prompt: "Which of these options is correct? ",
-            options: [
-                "I chose the image with the high contrast level more often in all blocks of trials.",
-                "I chose the image with the low contrast level more often in all blocks of trials.",
-                "I chose the low contrast image more often in some blocks of trials and the high contrast image more often in other blocks.",
-            ],
-            required: true,
-            horizontal: false,
-            correct: 2, // which answer is correct?
-        },
-        {
-            prompt: "Assume that you won 1 point by choosing the image on the left side of the fixation (+). Does this mean that you preferred the image on the left side in the coming trials, irrespective of its contrast levels??",
-            options: [
-                "Yes, because reward was dependent on the location of the image.",
-                "No, because reward was not dependent on the location of the image.",
-            ],
-            required: true,
-            horizontal: false,
-            correct: 1, // which answer is correct?
-        },
-        {
-            prompt: "Assume that you won 1 point in a trial after choosing a high contrast image. Consequently, did you always choose the image with high contrast in the next trials in that given block? ",
-            options: [
-                "No, because a previous reward does not necessarily guarantee that the chosen image leads to reward in all subsequent trials.",
-                "Yes, because a previous reward always guarantees that the chosen image leads to reward in all subsequent trials.",
-            ],
-            required: true,
-            horizontal: false,
-            correct: 0, // which answer is correct?
-        },
-        {
-            prompt: "There were trials in the task in which you were rewarded 0 points, despite choosing the previously rewarding image. ",
+            prompt: "I used the slider to indicate the chances of winning 1 point, if I had made the hypothetical choice that was presented. ",
             options: [
                 "True",
                 "False",
-            ],
-            required: true,
-            horizontal: false,
-            correct: 0, // which answer is correct?
-        },
-        {
-            prompt: "If your response to the earlier question was true, what do you think were the reasons for this?",
-            options: [
-                "a) The images had similar contrast levels, and I got confused between them.",
-                "b) There could be multiple reasons for it. I could have been confused because of the similar contrast levels between the images, and there is no guarantee that I would win 1 point despite choosing the more rewarding image.",
-                "c) This occurred because there was no guarantee that I would win 1 point even after choosing the previously rewarding image.",
-                "d) The images had no points associated with them."
-            ],
-            required: false,
-            horizontal: false,
-            correct: 1, // which answer is correct?
-        },
-        {
-            prompt: "I found it more difficult to tell the images apart from one another (based on contrast levels) on certain trials. ",
-            options: [
-                "Yes",
-                "No",
+                "Sometimes",
             ],
             required: true,
             horizontal: false,
             correct: 1, // which answer is correct?
-        },
-        {
-            prompt: "Assume you won 1 point more often when you chose the high contrast image in block 1. Did this necessarily happen to you in the next block of trials as well? ",
-            options: [
-                "Yes, because the relationship between the chosen image (high contrast image) and reward was the same across blocks. ",
-                "No, because the relationship between the chosen image (high contrast image) and reward sometimes changed from one block to the other (i.e., low contrast leads to reward). ",
-            ],
-            required: true,
-            horizontal: false,
-            correct: 1, // which answer is correct?
-        },
-        {
-            prompt: "If you wanted to choose the image on the right side of the fixation (+), which key did you press?",
-            options: [
-                "Right arrow",
-                "Left arrow",
-                "Space bar",
-                "Any other key"
-            ],
-            required: true,
-            horizontal: false,
-            correct: 0, // which answer is correct?
-        },
-        {
-            prompt: "Imagine that you were responding to a block of difficult trials, i.e., when you were not able to figure out the more rewarding image. In such a scenario, did you have a preference to respond towards a particular image? If so, please indicate.",
-            options: [
-                "High contrast image",
-                "Low contrast image",
-                "No, I had no such preference"
-            ],
-            required: true,
-            horizontal: false,
-            correct: 2, // which answer is correct?
         },
     ]
 
-
     // Define how many questions have to be answered correctly to advance
-    var nQuestions = 9  // How many questions should be sampled?
-    var nCorrectRequired = 9  // How many correct responses before participant can advance?
-
+    var nQuestions = 1  // How many questions should be sampled?
     var reminder_pages = [];  // initialize an empty list that will collect reminder pages of incorrect responses
-
     /* Comprehension quiz */
     var debriefquiz = {
         type: "survey-multi-choice",
@@ -152,7 +63,6 @@ var debrief = [
             );
         },
     };
-
     // Put the quiz procedure together
     debriefing = {
         timeline: [
