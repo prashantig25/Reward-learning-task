@@ -12,6 +12,8 @@
 </head>
 <body></body>
 <script>
+    
+var timeline = [];
 var fix = {
         type: 'canvas-keyboard-response',
         stimulus: fixation,
@@ -19,18 +21,94 @@ var fix = {
         choices: jsPsych.NO_KEYS,
         data: { condition: 'fixation'},
     };
-    var timeline = [];
-    var welcome = {
+var demo = {
+        type: 'image-keyboard-response',
+        stimulus: 'b.png',
+        prompt: "<p>Before we proceed to the instructions of the experiment, here is a short demonstration. Here are two examples of two images, each with varying contrast levels, presented on every trial. In the upper example, it is easy to discriminate between the two images based on contrast (brightness) levels. In the lower example, it is more difficult to discriminate the two images. In each trial, you are required to select one of the two images." +
+        "<br> If you want to choose the image presented on your left, please press the <strong>left arrow </strong> on your keyboard. <br>If you want to choose the image presented on your right, press the <strong>right arrow </strong>on your keyboard.<br>" +
+        " <br> Please press any key to proceed if you have seen the images. </p>",
+    };
+var lc_lose = {
+        type: 'image-keyboard-response',
+        stimulus: '0.5_green.png',
+        prompt: "<p> After the images are presented to you, you are required to select one of them. Depending on the image you choose in a trial, you will get different types of feedback. On each block of trials, there is a relationship between the contrast (brightness) level of the image and how often you will win 1 point if you choose that image. " +
+            "For example, on some blocks of trials, the image with higher contrast (brightness) is associated with winning 1 point, while in another block of trials, the relationship may be reversed. Here is an example of feedback after choosing the lighter image. In this block of trials, the underlying relationship is that the lighter images are more often rewarding. In this case, you would win 1 point on choosing the lighter image more often and 0 points on choosing the darker image. However, <strong> please note </strong> that you will not necessarily win 1 point when choosing the lighter image in this block. That is, there may be trials in a block in which you win 0 points even after choosing the correct image. Please press any key to proceed if you have understood these instructions. </p>",
+    }
+var lc_win = {
+        type: 'image-keyboard-response',
+        stimulus: '0.5_Red.png',
+        prompt: "<p>  Here is an example of feedback in a trial belonging to a block with the relationship: lighter image would lead to mostly 0 points. <strong> Please note </strong> that despite this relationship in this block, you may sometimes win 1 point even after choosing the lighter image on certain trials in this block. Thus, you may win 1 point even after choosing the incorrect image on some trials in some blocks. Please press any key to proceed if you have understood the instructions.  </p>",
+    }
+var hc_win = {
+        type: 'image-keyboard-response',
+        stimulus: '1_Green.png',
+        prompt: "<p>  Here is another example of feedback after choosing the darker image. In this case, you would win 1 point on choosing the darker image because of  the relationship: darker image would lead to mostly 1 point. <strong> Please note </strong> that although choosing the darker image is supposed to yield 1 point, this may not happen in some trials of this block. Please press any key to proceed if you have understood the instructions. </p>",
+    }
+var hc_lose = {
+        type: 'image-keyboard-response',
+        stimulus: '1_Red.png',
+        prompt: "<p>  Here is another example of feedback after choosing the darker image. <strong> Please note </strong> that although choosing the darker image is supposed to yield 1 point, here you win 0 points. This may happen in some trials of some blocks. Please press any key to proceed if you have understood the instructions. </p>",
+        response_ends_trial: true,
+    }
+var demo_slider = {
+        type: 'image-keyboard-response',
+        stimulus: 'demo_slider.png',
+        stimulus_height: 350,
+        stimulus_width: 700,
+        prompt: "<p>  In the next part of the trial, you will be presented with the <strong> slider </strong> that is displayed above. In this part of the trial, you will be presented with two images of different contrast levels. You will be asked to indicate <strong> the chance (in percent) </strong> with which you think you would win 1 point, if you were to choose a particular image. You should be able to estimate the chance of winning 1 point after a hypothetical choice, based on the feedback of your previous choices. " +
+        "You can indicate your response by clicking on the slider. You can drag through the slider, to adjust your response as you like. Please press any key to proceed if you have understood the instructions. </p>",
+        response_ends_trial: true,
+    }
+var welcome = {
         type: "html-keyboard-response",
         stimulus: "<p style=\"font-size: 20px;color: #000000\"> Welcome to the study. </p> <p> Please make sure that you are participating in this study in a calm and comfortable environment. Please place your laptop or desktop screen at one-arm distance from your eyes. If you are doing this study on a laptop, ensure that the laptop screen is at 90 degrees with the keyboard. <br> There are instructions at every stage of the study. Please read and understand them carefully. <br> If you are running this study on Safari, please exit now and restart the study on any other browser (e.g. Chrome, Firefox, MS Edge). </p> <p> Press any key to process forward.</p>",
     };
-    var survey_id = {
-        type: 'survey-text',
-        questions:[
-            {prompt: "Please enter your correct unique Prolific ID here.", name: 'Prolific_ID'}],
-        button_label:'Next',
+
+var instructions_phase1 = {
+        type: "html-keyboard-response", stimulus: "<p> Here are some instructions to help you understand the task better. This is the general structure of a trial. In one trial, you will be asked to make a choice. Once you make a choice, you will be presented with feedback to inform you about the number points you won on trial. </p>" +
+        "<p> After the feedback, you will be presented with the slider through which you have to indicate the percent chance of winning a reward, if you make a particular choice. Please press any key, to get a better understanding of how to make a choice in the task. </p>"
     };
-    var fb = {
+var instructions_phase2 = {
+        type: "html-keyboard-response", stimulus: "<p style=\"font-size: 20px;color: #000000\"> Here is a summarised explanation about how to make a choice in the task.</p>" +
+            "<p style=\"font-size: 20px;color: #000000\"> A fixation cross which looks like this (+) will precede each trial. Please fixate on the cross before the start of the trial. "+
+            "In each trial, you will be presented with two images. Both images may have different levels of contrast (i.e. brightness) on each trial. Your task is to choose one of these two images."+
+            "<br> If you want to choose the image presented on your left, please press the <strong>left arrow </strong> on your keyboard. <br>If you want to choose the image presented on your right, press the <strong>right arrow </strong>on your keyboard.<br>"+
+            " Your main aim is to figure out which image you should choose. On each block of trials there is a relationship between the contrast (brightness) level of the image and how often you may win 1 point if you choose that image. " +
+            "<br> For example, on some blocks of trials, the image with higher contrast (brightness) is associated with winning 1 point more often while in another block of trial, the relationship may be reversed."+
+            " This relationship may change when a new block of trials starts. You will learn this relationship from feedback after your choice. That is, after each trial, you will be presented with the points you win on that trial."+
+            " You should try to maximize your winnings on each trial." +
+            "<p> If you have understood these instructions, please press any key to proceed to the next phase of instructions.</p>"
+    };
+var instructions_phase3 = {
+        type: "html-keyboard-response", stimulus: "<p style=\"font-size: 20px;color: #000000\"> Here is a summarised explanation about how to use the slider to in the task.</p>" +
+            "<p style=\"font-size: 20px;color: #000000\"> Once you make a choice and receive feedback, you will be presented with a slider that ranges between 0 to 100 percent/ "+
+            "Again, you will be presented with two images. Both images may have different levels of contrast (i.e. brightness) on each trial. Additionally, you will be presented with a hypothetical choice that you could have made. "+
+            "<br> Based on this hypothetical choice scenario, you are expected to indicate the chances with which you can win 1 point on the scale of 0 to 100 percent. <br> To select the chance, you can drag the slider based on the labels of the slider. You could also directly click on the slider above a particular percent to respond. <br>"+
+            " Once you respond, please click on the <strong> Next trial <strong> button to proceed to the next trial. " +
+            "<p> If you have understood these instructions, please press any key to proceed to the experiment.</p>"
+  };
+var score = {
+        type: 'html-keyboard-response',
+        on_start: function(score){
+            score.total = jsPsych.data.get().last(trialcounter).select('correct').sum()
+        },
+        stimulus:function () {
+            var points = jsPsych.data.get().last(trialcounter).select('correct').sum() // adds all the points earned in the last n (trialcounter) number of trials to present total points at the end of the block.
+            return `<p style=\"font-size: 25px;color: #000000\">You win <strong> ${points} </strong> points in this block. <br> You have completed <strong> ${counter} </strong> blocks out of 12 blocks of the experiment. Press a key to proceed forward.</p>`
+        },
+        on_finish: function(data) {
+            data.finalscore = jsPsych.currentTrial().total // final score after each block
+            trialcounter = 0 // trial counter resets to 0 after a block ends because the trialcounter counts the number of points in each block seperately
+            index = 0 // index of rewards also resets to 0 after a block ends
+            index_missed = 0
+            index_mu = 0
+            action_s0 = 0;
+            action_s1 = 0;
+            counter = counter + 1; // Increase the counter by one when a fresh block of trials start.
+            s = shuffle(state);
+        }
+    };   
+var fb = {
         type: "html-keyboard-response", choices: jsPsych.NO_KEYS, trial_duration: duration,
         stimulus: function () {
             var last_trial_correct = jsPsych.data.get().last(1).values()[0].correct;
@@ -65,22 +143,37 @@ var fix = {
           data.contrast_right  = avgcon - data.difference
         }
     };
-    var instructions = {
-        type: "html-keyboard-response", stimulus: "<p> New instructions to be inserted here. </p>"
-    };
-    var firstblock = {
+var firstblock = {
         type: "html-keyboard-response",
         stimulus: "<p style=\"font-size: 20px;color: #000000\"> The first block of trials will begin now. <br> The relationship between the contrast level of the images and reward may change now as compared to previous blocks. <br> Press a key when you are ready.</p>",
     };
-    var nextblock = {
+var nextblock = {
         type: "html-keyboard-response",
         stimulus: "<p style=\"font-size: 20px;color: #000000\"> Next block begins now. <br> The relationship between the contrast level of the images and reward may change now as compared to previous blocks. <br> Press a key when you are ready.</p>",
     };
+var completion_id = {
+        type: 'survey-text',
+        questions: [
+            {prompt: "The completion code for this study is 88C1F9FF. Please enter this code here.", name: 'Completion_code'}],
+    };
     
-    var mu_missed = {
+var prac_rand = jsPsych.randomization.sampleWithReplacement([0,1],1);
+var prac_score = {
+        type: 'html-keyboard-response',
+        stimulus:function () {
+            var prac_counter = prac_blocks.shift()
+            var prac_total = jsPsych.data.get().last(100).select('correct').sum()
+            return `<p style=\"font-size: 25px;color: #000000\">You win <strong> ${prac_total} </strong> points in this block. <br> You have completed <strong> ${prac_counter} </strong> out of 3 practice blocks. <br> Press a key to proceed forward.</p>`
+        },
+        on_finish: function(){
+          var prac_rand = jsPsych.randomization.sampleWithReplacement([0,1],1);
+        }
+    };
+var mu_missed = {
       type: 'canvas-slider-response',
       trial_duration: 6000,
       canvas_size: [350, 500],
+      data: {condition: 'mu_missed'},
       button_label: 'Next trial',
       slider_start: 0,
       stimulus: gabor,
@@ -119,7 +212,7 @@ var fix = {
             data.state = s[jsPsych.currentTrial().index_mu]
         }
     };
-    var missed_trial = { // missed trial
+var missed_trial = { // missed trial
         type: 'canvas-keyboard-response', //jsPsych trial type
         stimulus: gabor, // gabor drawn based on function
         data: {condition: 'missed'}, // condition of this trial
@@ -163,8 +256,8 @@ var fix = {
             data.tcount = trialcounter
         },
     };
-    var missed_mixed = {timeline: [fix, missed_trial, fb, mu_missed], repetitions: 1} //full trial procedure of a missed trial
-    var missed_loop = {   // Runs the loop till the missed array has elements. Stops when the missed array is empty.
+var missed_mixed = {timeline: [fix, missed_trial, fb, mu_missed], repetitions: 1} //full trial procedure of a missed trial
+var missed_loop = {   // Runs the loop till the missed array has elements. Stops when the missed array is empty.
         timeline: [missed_mixed],
         loop_function: function() {
             if (missed.length === 0) {
@@ -174,7 +267,7 @@ var fix = {
             }
         },
     };
-    var missed_conditional = { // first runs the conditional to check if the missed array has any elements. Will skip the missed_loop entirely if the participant has missed no trials in that block.
+var missed_conditional = { // first runs the conditional to check if the missed array has any elements. Will skip the missed_loop entirely if the participant has missed no trials in that block.
         timeline: [missed_loop],
         conditional_function: function() {
             if (missed.length > 0) { // Checks the length of the missed array. Will run the missed_loop only if the participant has missed any trials.
@@ -184,34 +277,8 @@ var fix = {
             }
         }
     };
-    var completion_id = {
-        type: 'survey-text',
-        questions: [
-            {prompt: "The completion code for this study is 88C1F9FF. Please enter this code here.", name: 'Completion_code'}],
-    };
-  
-  var score = {
-        type: 'html-keyboard-response',
-        on_start: function(score){
-            score.total = jsPsych.data.get().last(trialcounter).select('correct').sum()
-        },
-        stimulus:function () {
-            var points = jsPsych.data.get().last(trialcounter).select('correct').sum() // adds all the points earned in the last n (trialcounter) number of trials to present total points at the end of the block.
-            return `<p style=\"font-size: 25px;color: #000000\">You win <strong> ${points} </strong> points in this block. <br> You have completed <strong> ${counter} </strong> blocks out of 6 blocks of the experiment. Press a key to proceed forward.</p>`
-        },
-        on_finish: function(data) {
-            data.finalscore = jsPsych.currentTrial().total // final score after each block
-            trialcounter = 0 // trial counter resets to 0 after a block ends because the trialcounter counts the number of points in each block seperately
-            index = 0 // index of rewards also resets to 0 after a block ends
-            index_missed = 0
-            index_mu = 0
-            action_s0 = 0;
-            action_s1 = 0;
-            counter = counter + 1; // Increase the counter by one when a fresh block of trials start.
-            s = shuffle(state);
-        }
-    };   
-    var perceptual = {
+
+var perceptual = {
         type: 'canvas-keyboard-response',
         stimulus: gabor, // generates the two patches for the trial using the gabor function
         data: {condition: 'perceptual'}, // data stored for this trial
@@ -264,7 +331,7 @@ var fix = {
             data.reward = jsPsych.currentTrial().a // store the action for this trial
         }
     };
-    var perceptual_1 = {
+var perceptual_1 = {
         type: 'canvas-keyboard-response',
         stimulus: gabor, // generates the two patches for the trial using the gabor function
         data: {condition: 'perceptual'}, // data stored for this trial
@@ -316,8 +383,7 @@ var fix = {
             data.reward = jsPsych.currentTrial().a
         }
     };
-    
-    var reward = {
+var reward = {
         type: 'canvas-keyboard-response',
         stimulus: gabor, // generates the two patches for the trial using the gabor function
         data: {condition: 'reward'}, // data stored for this trial
@@ -369,7 +435,7 @@ var fix = {
             data.reward = jsPsych.currentTrial().a
         }
     };
-    var reward_1 = {
+var reward_1 = {
         type: 'canvas-keyboard-response',
         stimulus: gabor, // generates the two patches for the trial using the gabor function
         data: {condition: 'reward'}, // data stored for this trial
@@ -421,7 +487,7 @@ var fix = {
             data.reward = jsPsych.currentTrial().a
         }
     };
-    var mixed = {
+var mixed = {
         type: 'canvas-keyboard-response',
         stimulus: gabor, // generates the two patches for the trial using the gabor function
         data: {condition: 'mixed'}, // data stored for this trial
@@ -473,7 +539,7 @@ var fix = {
             data.reward = jsPsych.currentTrial().a
         }
     };
-    var mixed_1 = {
+var mixed_1 = {
         type: 'canvas-keyboard-response',
         stimulus: gabor, // generates the two patches for the trial using the gabor function
         data: {condition: 'mixed'}, // data stored for this trial
@@ -525,17 +591,19 @@ var fix = {
             data.reward = jsPsych.currentTrial().a
         }
     };
-    
-    //miss
-    var mu = {
+var mu = {
       type: 'canvas-slider-response',
-      trial_duration: 6000,
-      canvas_size: [350, 500],
+      canvas_size: [370, 500],
       button_label: 'Next trial',
-      slider_start: 0,
+      data: {condition: 'mu'},
       stimulus: gabor,
       require_movement: true,
-      labels: ['0', '0.1','0.2', '0.3', '0.4', '0.5', '0.6', '0.7', '0.8', '0.9', '1'],
+      slider_start: 50,
+      labels: ['0%','25%', '50%', '75%', '100%'],
+      on_load: function(){
+      document.querySelector('#jspsych-canvas-slider-response-response').addEventListener('click', function(e){
+        e.target.style.visibility = 'show'})
+    },
       on_start: function(mu) {
             mu.contrast_left = avgcon + jsPsych.data.get().last(1).values()[0].difference // calculate the contrast for the left gabor based on this trial's difference
             mu.contrast_right  = avgcon - jsPsych.data.get().last(1).values()[0].difference
@@ -546,18 +614,18 @@ var fix = {
         var trial_contrast = jsPsych.data.get().last(2).values()[0].contrast
         if (trial_contrast === 0) {
           if (con_left > con_right) {
-              return " <p> If you choose the image on your right, what do you think is the probability of winning a reward? </p>"
+              return " <p> If you choose the image on your right, what do you think is the chance of winning a reward? </p>"
             }
             else {
-              return " <p> If you choose the image on your left, what do you think is the probability of winning a reward? </p>"
+              return " <p> If you choose the image on your left, what do you think is the chance of winning a reward? </p>"
             }
         }
         else {
           if (con_left > con_right) {
-              return " <p> If you choose the image on your left, what do you think is the probability of winning a reward? </p>"
+              return " <p> If you choose the image on your left, what do you think is the chance of winning a reward? </p>"
             }
             else {
-              return " <p> If you choose the image on your right, what do you think is the probability of winning a reward? </p>"
+              return " <p> If you choose the image on your right, what do you think is the chance of winning a reward? </p>"
           }
         }
         },
@@ -569,38 +637,102 @@ var fix = {
             data.state = s[jsPsych.currentTrial().index_mu]
         }
     };
-    
+var mu_1 = {
+      type: 'canvas-slider-response',
+      canvas_size: [370, 500],
+      button_label: 'Next trial',
+      stimulus: gabor,
+      data: {condition: 'mu'},
+      require_movement: true,
+      slider_start: 0,
+      labels: ['0%','25%', '50%', '75%', '100%'],
+      on_load: function(){
+      document.querySelector('#jspsych-canvas-slider-response-response').addEventListener('click', function(e){
+        e.target.style.visibility = 'show'})
+    },
+      on_start: function(mu) {
+            mu.contrast_left = avgcon + jsPsych.data.get().last(1).values()[0].difference // calculate the contrast for the left gabor based on this trial's difference
+            mu.contrast_right  = avgcon - jsPsych.data.get().last(1).values()[0].difference
+      },
+      prompt: function () {
+        var con_left = avgcon + jsPsych.data.get().last(1).values()[0].difference
+        var con_right =  avgcon - jsPsych.data.get().last(1).values()[0].difference
+        var trial_contrast = jsPsych.data.get().last(2).values()[0].contrast
+        if (trial_contrast === 0) {
+          if (con_left > con_right) {
+              return " <p> If you choose the image on your left, what do you think is the chance of winning a reward? </p>"
+            }
+            else {
+              return " <p> If you choose the image on your right, what do you think is the chance of winning a reward? </p>"
+            }
+        }
+        else {
+          if (con_left > con_right) {
+              return " <p> If you choose the image on your right, what do you think is the chance of winning a reward? </p>"
+            }
+            else {
+              return " <p> If you choose the image on your left, what do you think is the chance of winning a reward? </p>"
+          }
+        }
+        },
+      on_finish: function (data) {
+            data.contrast_left = jsPsych.data.get().last(1).values()[0].contrast_left // stores the contrast level of left patch on this trial
+            data.contrast_right = jsPsych.data.get().last(1).values()[0].contrast_right // stores the contrast level of right patch on this trial
+            data.diff = jsPsych.data.get().last(1).values()[0].difference
+            index_mu = index_mu + 1;
+            data.state = s[jsPsych.currentTrial().index_mu]
+        }
+    };
     var trial_perceptual = {timeline: [fix, perceptual, fb, mu], repetitions: 25, randomize_order: false};
-    var trial_perceptual_1 = {timeline: [fix, perceptual_1, fb, mu], repetitions: 25, randomize_order: false};
-    var trial_reward = {timeline: [fix, reward, fb, mu], repetitions: 25, randomize_order: false};
-    var trial_reward_1 = {timeline: [fix, reward_1, fb, mu], repetitions: 25, randomize_order: false};
-    var trial_mixed = {timeline: [fix, mixed, fb, mu], repetitions: 25, randomize_order: false};
-    var trial_mixed_1 = {timeline: [fix, mixed_1, fb, mu], repetitions: 25, randomize_order: false};
+var trial_perceptual_1 = {timeline: [fix, perceptual_1, fb, mu], repetitions: 25, randomize_order: false};
+var trial_reward = {timeline: [fix, reward, fb, mu], repetitions: 25, randomize_order: false};
+var trial_reward_1 = {timeline: [fix, reward_1, fb, mu], repetitions: 25, randomize_order: false};
+var trial_mixed = {timeline: [fix, mixed, fb, mu], repetitions: 25, randomize_order: false};
+var trial_mixed_1 = {timeline: [fix, mixed_1, fb, mu], repetitions: 25, randomize_order: false};
+    
+var trial_perceptual_mu_1 = {timeline: [fix, perceptual, fb, mu_1], repetitions: 25, randomize_order: false};
+var trial_perceptual_1_mu_1 = {timeline: [fix, perceptual_1, fb, mu_1], repetitions: 25, randomize_order: false};
+var trial_reward_mu_1 = {timeline: [fix, reward, fb, mu_1], repetitions: 25, randomize_order: false};
+var trial_reward_1_mu_1 = {timeline: [fix, reward_1, fb, mu_1], repetitions: 25, randomize_order: false};
+var trial_mixed_mu_1 = {timeline: [fix, mixed, fb, mu_1], repetitions: 25, randomize_order: false};
+var trial_mixed_1_mu_1 = {timeline: [fix, mixed_1, fb, mu_1], repetitions: 25, randomize_order: false};
 
-    var block1 = {timeline: [trial_perceptual, missed_conditional, score, nextblock], repetitions: 1};
-    var block2 = {timeline: [trial_perceptual_1, missed_conditional, score, nextblock], repetitions: 1};
-    var block3 = {timeline: [trial_reward, missed_conditional, score, nextblock], repetitions: 1};
-    var block4 = {timeline: [trial_reward_1, missed_conditional, score, nextblock], repetitions: 1};
-    var block5 = {timeline: [trial_mixed, missed_conditional, score, nextblock], repetitions: 1};
-    var block6 = {timeline: [trial_mixed_1, missed_conditional, score,nextblock], repetitions: 1};
+var block1 = {timeline: [trial_perceptual, missed_conditional, score], repetitions: 1};
+var block2 = {timeline: [trial_perceptual_1, missed_conditional, score], repetitions: 1};
+var block3 = {timeline: [trial_reward, missed_conditional, score], repetitions: 1};
+var block4 = {timeline: [trial_reward_1, missed_conditional, score], repetitions: 1};
+var block5 = {timeline: [trial_mixed, missed_conditional, score], repetitions: 1};
+var block6 = {timeline: [trial_mixed_1, missed_conditional, score], repetitions: 1};
+    
+var block7 = {timeline: [trial_perceptual_mu_1, missed_conditional, score], repetitions: 1};
+var block8 = {timeline: [trial_perceptual_1_mu_1, missed_conditional, score], repetitions: 1};
+var block9 = {timeline: [trial_reward_mu_1, missed_conditional, score], repetitions: 1};
+var block10 = {timeline: [trial_reward_1_mu_1, missed_conditional, score], repetitions: 1};
+var block11 = {timeline: [trial_mixed_mu_1, missed_conditional, score], repetitions: 1};
+var block12 = {timeline: [trial_mixed_1_mu_1, missed_conditional, score], repetitions: 1};
+    
+var start = {timeline: [welcome]};
+var demo = {timeline: [demo, lc_lose, lc_win, hc_win, hc_lose, demo_slider]};
+var instructions = {timeline: [instructions_phase1, instructions_phase2, instructions_phase3]};
+var blockarray = [block1, block7, block6, block5, block4, block3, block2, block8, block9, block10, block11, block12];
+var blocks_shuffled = jsPsych.randomization.shuffle(blockarray); // first set of blocks
+var block_1 = blocks_shuffled[0]; var block_2 = blocks_shuffled[1]; var block_3 = blocks_shuffled[2]; var block_4 = blocks_shuffled[3]; 
+var block_5 = blocks_shuffled[4]; var block_6 = blocks_shuffled[5]; var block_7 = blocks_shuffled[6]; var block_8 = blocks_shuffled[7];
+var block_9 = blocks_shuffled[8]; var block_10 = blocks_shuffled[9]; var block_11 = blocks_shuffled[10]; var block_12 = blocks_shuffled[11];
+var blocks_shuffled_array = [block_1, nextblock, block_2, nextblock, block_3, nextblock, block_4, nextblock, block_5, nextblock, block_6, nextblock, block_7, nextblock, block_8, nextblock, block_9, nextblock, block_10, nextblock, block_11, nextblock]
+var blocks = {timeline: [blocks_shuffled_array], repetitions:1}
 
-    timeline.push(welcome)
-    //timeline.push(survey_id)
-    //timeline.push(fix)
-    timeline.push(instructions)
-    timeline.push(firstblock)
-    timeline.push(block1)
-    timeline.push(nextblock)
-    timeline.push(block2)
-    timeline.push(nextblock)
-    timeline.push(block3)
-    timeline.push(nextblock)
-    timeline.push(block4)
-    timeline.push(nextblock)
-    timeline.push(block5)
-    timeline.push(nextblock)
-    timeline.push(block6)
-    timeline.push(completion_id)
+timeline.push(start)
+timeline.push(demo)
+timeline.push(instructions)
+timeline.push(block_1); timeline.push(nextblock); timeline.push(block_2); timeline.push(nextblock); timeline.push(block_3); timeline.push(nextblock);
+timeline.push(block_4); timeline.push(nextblock); timeline.push(block_5); timeline.push(nextblock); timeline.push(block_6); timeline.push(nextblock);
+timeline.push(block_7); timeline.push(nextblock); timeline.push(block_8); timeline.push(nextblock); timeline.push(block_9); timeline.push(nextblock);
+timeline.push(block_10); timeline.push(nextblock); timeline.push(block_11); timeline.push(nextblock); timeline.push(block_12); timeline.push(nextblock);
+
+jsPsych.init({
+        timeline: timeline,
+    });
     jsPsych.init({
         timeline: timeline,
       
