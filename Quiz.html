@@ -5,9 +5,154 @@
     <title>Quiz</title>
     <script src="js/jspsych.js"></script>
     <script src="js/jspsych-survey-multi-choice.js"></script>
+    <script src="js/jspsych-image-keyboard-response.js"></script>
+    <script src="js/jspsych-html-keyboard-response.js"></script>
+    <script src="js/jspsych-survey-text.js"></script>
 </head>
 <script>
 var timeline = [];
+var demo = {
+        type: 'image-keyboard-response',
+        stimulus: 'b.png',
+        prompt: "<p>Before we proceed to the instructions of the experiment, here is a short demonstration. Here are two examples of two images, each with varying contrast levels, presented on every trial. In the upper example, it is easy to discriminate between the two images based on contrast (brightness) levels. In the lower example, it is more difficult to discriminate the two images. In each trial, you are required to select one of the two images." +
+        "<br> If you want to choose the image presented on your left, please press the <strong>left arrow </strong> on your keyboard. <br>If you want to choose the image presented on your right, press the <strong>right arrow </strong>on your keyboard.<br>" +
+        " <br> Please press any key to proceed if you have seen the images. </p>",
+    };
+var lc_lose = {
+        type: 'image-keyboard-response',
+        stimulus: '0.5_green.png',
+        prompt: "<p> After the images are presented to you, you are required to select one of them. Depending on the image you choose in a trial, you will get different types of feedback. On each block of trials, there is a relationship between the contrast (brightness) level of the image and how often you will win 1 point if you choose that image. " +
+            "For example, on some blocks of trials, the image with higher contrast (brightness) is associated with winning 1 point, while in another block of trials, the relationship may be reversed. <br> In the above example, feedback is presented after choosing the lighter image. In this block of trials, the underlying relationship is that the lighter images are more often rewarding. <br> In this case, you would win 1 point on choosing the lighter image more often and 0 points on choosing the darker image. However, <strong> please note </strong> that you will not necessarily win 1 point when choosing the lighter image in this block. That is, there may be trials in a block in which you win 0 points even after choosing the correct image. Please press any key to proceed if you have understood these instructions. </p>",
+    }
+var lc_win = {
+        type: 'image-keyboard-response',
+        stimulus: '0.5_Red.png',
+        prompt: "<p>  Here is an example of feedback in a trial belonging to a block with the relationship: lighter image would lead to mostly 0 points. <strong> Please note </strong> that despite this relationship in this block, you may sometimes win 1 point even after choosing the lighter image on certain trials in this block. Thus, you may win 1 point even after choosing the incorrect image on some trials in some blocks. Please press any key to proceed if you have understood the instructions.  </p>",
+    }
+var hc_win = {
+        type: 'image-keyboard-response',
+        stimulus: '1_Green.png',
+        prompt: "<p>  Here is another example of feedback after choosing the darker image. In this case, you would win 1 point on choosing the darker image because of  the relationship: darker image would lead to mostly 1 point. <strong> Please note </strong> that although choosing the darker image is supposed to yield 1 point, this may not happen in some trials of this block. Please press any key to proceed if you have understood the instructions. </p>",
+    }
+var hc_lose = {
+        type: 'image-keyboard-response',
+        stimulus: '1_Red.png',
+        prompt: "<p>  Here is another example of feedback after choosing the darker image. <strong> Please note </strong> that although choosing the darker image is supposed to yield 1 point, here you win 0 points. This may happen in some trials of some blocks. Please press any key to proceed if you have understood the instructions. </p>",
+        response_ends_trial: true,
+    }
+var demo_slider = {
+        type: 'image-keyboard-response',
+        stimulus: 'demo_slider.png',
+        stimulus_height: 400,
+        stimulus_width: 900,
+        prompt: "<p>  In the next part of the trial, you will be presented with the <strong> slider </strong> that is displayed above. In this part of the trial, you will be presented with two images of different contrast levels. You will be asked to indicate <strong> the chance (in percent) </strong> with which you think you would win 1 point, if you were to choose a particular image. You should be able to estimate the chance of winning 1 point after a hypothetical choice, based on the feedback of your previous choices. " +
+        "You can indicate your response by clicking on the slider. You can drag through the slider, to adjust your response as you like. Please press any key to proceed if you have understood the instructions. </p>",
+        response_ends_trial: true,
+    }
+var welcome = {
+        type: "html-keyboard-response",
+        stimulus: "<p style=\"font-size: 20px;color: #000000\"> Welcome to the study. </p> <p> Please make sure that you are participating in this study in a calm and comfortable environment. Please place your desktop screen at one-arm distance from your eyes. <br> There are instructions at every stage of the study. Please read and understand them carefully. <br> If you are running this study on Safari, please exit now and restart the study on any other browser (e.g. Chrome, Firefox, MS Edge). </p> <p> Press any key to process forward.</p>",
+    };
+var survey_id = {
+        type: 'survey-text',
+        questions:[
+            {prompt: "Please enter your correct unique Prolific ID here.", name: 'Prolific_ID'}],
+        button_label:'Next',
+    };
+var instructions_phase1 = {
+        type: "html-keyboard-response", stimulus: "<p> Here are some instructions to help you understand the task better. This is the general structure of a trial. In one trial, you will be asked to make a choice. Once you make a choice, you will be presented with feedback to inform you about the number points you won on trial. </p>" +
+        "<p> After the feedback, you will be presented with the slider through which you have to indicate the percent chance of winning a reward, if you make a particular choice. Please press any key, to get a better understanding of how to make a choice in the task. </p>"
+    };
+var instructions_phase2 = {
+        type: "html-keyboard-response", stimulus: "<p style=\"font-size: 20px;color: #000000\"> Here is a summarised explanation about how to make a choice in the task.</p>" +
+            "<p> A fixation cross which looks like this (+) will precede each trial. Please fixate on the cross before the start of the trial. "+
+            "In each trial, you will be presented with two images. Both images may have different levels of contrast (i.e. brightness) on each trial. Your task is to choose one of these two images."+
+            "<br> <p> If you want to choose the image presented on your left, please press the <strong>left arrow </strong> on your keyboard. <br>If you want to choose the image presented on your right, press the <strong>right arrow </strong>on your keyboard.<br>"+
+            " Your main aim is to figure out which image you should choose. On each block of trials there is a relationship between the contrast (brightness) level of the image and how often you may win 1 point if you choose that image. " +
+            "</p> <br> For example, on some blocks of trials, the image with higher contrast (brightness) is associated with winning 1 point more often while in another block of trial, the relationship may be reversed."+
+            " This relationship may change when a new block of trials starts. You will learn this relationship from feedback after your choice. That is, after each trial, you will be presented with the points you win on that trial."+
+            " You should try to maximize your winnings on each trial." +
+            "<p> If you have understood these instructions, please press any key to proceed to the next phase of instructions.</p>"
+    };
+var instructions_phase3 = {
+        type: "html-keyboard-response", stimulus: "<p style=\"font-size: 20px;color: #000000\"> Here is a summarised explanation about how to use the slider to in the task.</p>" +
+            "<p> Once you make a choice and receive feedback, you will be presented with a slider that ranges between 0 to 100 percent/ "+
+            "Again, you will be presented with two images. Both images may have different levels of contrast (i.e. brightness) on each trial. Additionally, you will be presented with a hypothetical choice that you could have made. "+
+            "<br> <p> Based on this hypothetical choice scenario, you are expected to indicate the chances with which you can win 1 point on the scale of 0 to 100 percent. <br> To select the chance, you can drag the slider based on the labels of the slider. You could also directly click on the slider above a particular percent to respond. </p><br>"+
+            " Once you respond, please click on the <strong> Next trial </strong> button to proceed to the next trial. " +
+            "<p> If you have understood these instructions, please press any key to proceed to the experiment.</p>"
+  };
+  
+var questions = [
+        {
+            prompt: "Once you have clicked on the slider to respond, how can you use the slider to re-adjust your response to a desired percent level.",
+            options: [
+                "Directly click on the slider corresponding to the desired percent labels. ",
+                "Drag the slider to the desired percent labels.",
+                "Re-adjustment of response is not possible once the slider has been initially clicked.",
+                "Click on the slider and then drag it to a corresponding desired percent label."
+            ],
+            required: true,
+            horizontal: false,
+            correct: 3, // which answer is correct?
+            reminder: `
+    <div style="max-width: 800px">
+    <p style="color:#000000"><strong>Indicate the correct method(s) of responding using a slider, if you want to choose a particular percent on the slider to indicate the chances of winning 1 point. </strong></p>
+    <p style="color:green"><strong>Correct Answer: Click on the slider and then drag to the desired percent labels.</strong></p>
+    <p style="color:#ff4500"><strong>Your answer was incorrect!</strong></p>
+    <p align="justify"> Please click on the slider directly to choose the corresponding percent label below and drag the slider if you want to adjust your response. </p>
+    <p>Press <strong><em>SPACE BAR</em></strong> to continue.</p>
+    `,
+        },
+        {
+            prompt: "The percentages on the slider indicate which of the following?",
+            options: [
+                "Chances of winning 0 points, based on the hypothetical choice",
+                "Chances of winning 1 point, based on the previous trial's choice",
+                "Chances of winning 2 points",
+                "Chances of winning 1 point, based on the hypothetical choice."
+            ],
+            required: true,
+            horizontal: false,
+            correct: 3, // which answer is correct?
+            reminder: `
+    <p style="color:#000000"><strong> The percentages on the slider indicate which of the following? </strong></p>
+    <p style="color:green"><strong>Correct Answer: Chances of winning 1 point, based on the hypothetical choice.</strong></p>
+    <p style="color:orangered"><strong>Your answer was incorrect!</strong></p>
+    <p align="justify">The percentages indicate the chances of winning 1 point, if you made the hypothetical choice.</p>
+    <p>Press <strong><em>SPACE BAR</em></strong> to continue.</p>
+    `,
+        },
+        {
+            prompt: "If you think that the chances of winning 1 point is 70 percent, if you made the hypothetical choice, to which percent label would you drag the slider to? ",
+            options: [
+                "30%",
+                "60%",
+                "70%",
+            ],
+            required: true,
+            horizontal: false,
+            correct: 2, // which answer is correct?
+            reminder: `
+    <p style="color:#000000"><strong>If you think that the chances of winning 1 point is 70 percent, 
+    if you made the hypothetical choice, to which percent label would you drag the slider to? </strong></p>
+    <p style="color:green"><strong>Correct Answer: 70%</strong></p>
+    <p style="color:#ff4500"><strong>Your answer was incorrect!</strong></p>
+    <p align="justify">If you think that the chances of winning 1 point is 70 percent, please click and drag the slider to the 70% label on the slider. </p>
+    <p>Press <strong><em>SPACE BAR</em></strong> to continue.</p>
+    `,
+        },
+    ]
+// Define how many questions have to be answered correctly to advance
+var nQuestions = 3  // How many questions should be sampled?
+var nCorrectRequired = 3  // How many correct responses before participant can advance?
+var reminder_pages = [];  // initialize an empty list that will collect reminder pages of incorrect responses
+// Define the first question sample (can be a subset of questions, or all, ...)
+questionSample = jsPsych.randomization.sampleWithoutReplacement(
+        questions,
+        nQuestions
+    );
+/* Comprehension quiz */
 var quiz = {
         type: "survey-multi-choice",
         preamble: `
@@ -20,7 +165,7 @@ var quiz = {
         randomize_question_order: false,
         button_label: "Submit answers",
         on_start: function () {
-            document.body.style.cursor = "auto";
+            //document.body.style.cursor = "auto";
             nCorrect = 0;
         },
         on_finish: function (data) {
@@ -59,7 +204,7 @@ var quiz = {
         on_finish: function () {
             reminder_pages = [];
         },
-        on_start: () => (document.body.style.cursor = "none"),
+        //on_start: () => (document.body.style.cursor = "none"),
     };
     var correct = {
         type: 'html-keyboard-response',
@@ -94,4 +239,4 @@ var quiz = {
 </script>
 </html>
 
-// Reference: https://github.com/moltaire/causality_task/ 
+// Code for quiz reference: https://github.com/moltaire/causality_task/ 
