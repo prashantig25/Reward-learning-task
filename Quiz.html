@@ -235,7 +235,14 @@ var quiz = {
         ],
 
     };
-    
+var demo_timeline = {timeline: [demo, lc_lose, lc_win, hc_win, hc_lose, demo_slider]};
+var instructions = {timeline: [instructions_phase1, instructions_phase2, instructions_phase3]};
+timeline.push(demo_timeline)
+timeline.push(quizProcedure)
+timeline.push(instructions)
+jsPsych.init({
+        timeline: timeline,
+    });
 </script>
 </html>
 
