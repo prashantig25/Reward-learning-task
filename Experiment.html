@@ -540,7 +540,9 @@ var mu = {
       button_label: 'Next trial',
       data: {condition: 'mu'},
       stimulus: gabor,
-      require_movement: true,
+      //require_movement: true,
+      response_ends_trial: true,
+      trial_duration: 6000,
       //slider_start: 0,
       labels: ['0%','25%', '50%', '75%', '100%'],
       on_start: function(mu) {
@@ -588,9 +590,10 @@ var mu_1 = {
       button_label: 'Next trial',
       stimulus: gabor,
       data: {condition: 'mu'},
-      require_movement: true,
+      response_ends_trial: true,
+      //require_movement: true,
       //slider_start: 0,
-      //css_classes: ['webkit-slider-thumb', 'ms-thumb', 'moz-range-thumb'],
+      trial_duration: 6000,
       labels: ['0%','25%', '50%', '75%', '100%'],
       on_start: function(mu_1) {
             document.body.style.cursor = "auto";
