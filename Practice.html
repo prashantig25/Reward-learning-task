@@ -62,7 +62,7 @@ var prac_score = {
         type: 'html-keyboard-response',
         stimulus:function () {
             var prac_counter = prac_blocks.shift()
-            var prac_total = jsPsych.data.get().last(100).select('correct').sum()
+            var prac_total = jsPsych.data.get().last(125).select('correct').sum()
             return `<p style=\"font-size: 25px;color: #000000\">You win <strong> ${prac_total} </strong> points in this block. <br> You have completed <strong> ${prac_counter} </strong> out of 3 practice blocks. <br> Press a key to proceed forward.</p>`
         },
         on_finish: function(){
@@ -383,7 +383,104 @@ var mixed_1 = {
             data.reward = jsPsych.currentTrial().a
         }
     };
-
+var mu = {
+      type: 'canvas-slider-response',
+      canvas_size: [300, 500],
+      button_label: 'Next trial',
+      data: {condition: 'mu'},
+      stimulus: gabor,
+      //require_movement: true,
+      response_ends_trial: true,
+      trial_duration: 6000,
+      //slider_start: 0,
+      labels: ['0%','25%', '50%', '75%', '100%'],
+      on_start: function(mu) {
+            document.body.style.cursor = "auto";
+            mu.contrast_left = avgcon + jsPsych.data.get().last(1).values()[0].difference // calculate the contrast for the left gabor based on this trial's difference
+            mu.contrast_right  = avgcon - jsPsych.data.get().last(1).values()[0].difference
+      },
+      on_load: function(){
+	document.querySelector('#jspsych-canvas-slider-response-response').addEventListener('click', function(e){
+		e.target.style.visibility = 'show'
+	})
+	},
+      prompt: function () {
+        var con_left = avgcon + jsPsych.data.get().last(1).values()[0].difference
+        var con_right =  avgcon - jsPsych.data.get().last(1).values()[0].difference
+        var trial_contrast = jsPsych.data.get().last(2).values()[0].contrast
+        if (trial_contrast === 0) {
+          if (con_left > con_right) {
+              return " <p> If you choose the image on your right, what do you think is the chance of winning a reward? </p>"
+            }
+            else {
+              return " <p> If you choose the image on your left, what do you think is the chance of winning a reward? </p>"
+            }
+        }
+        else {
+          if (con_left > con_right) {
+              return " <p> If you choose the image on your left, what do you think is the chance of winning a reward? </p>"
+            }
+            else {
+              return " <p> If you choose the image on your right, what do you think is the chance of winning a reward? </p>"
+          }
+        }
+        },
+      on_finish: function (data) {
+            data.contrast_left = jsPsych.data.get().last(1).values()[0].contrast_left // stores the contrast level of left patch on this trial
+            data.contrast_right = jsPsych.data.get().last(1).values()[0].contrast_right // stores the contrast level of right patch on this trial
+            data.diff = jsPsych.data.get().last(1).values()[0].difference
+            index_mu = index_mu + 1;
+            data.state = s[jsPsych.currentTrial().index_mu]
+        }
+    };
+var mu_1 = {
+      type: 'canvas-slider-response',
+      canvas_size: [300, 500],
+      button_label: 'Next trial',
+      stimulus: gabor,
+      data: {condition: 'mu'},
+      response_ends_trial: true,
+      //require_movement: true,
+      //slider_start: 0,
+      trial_duration: 6000,
+      labels: ['0%','25%', '50%', '75%', '100%'],
+      on_start: function(mu_1) {
+            document.body.style.cursor = "auto";
+            mu_1.contrast_left = avgcon + jsPsych.data.get().last(1).values()[0].difference // calculate the contrast for the left gabor based on this trial's difference
+            mu_1.contrast_right  = avgcon - jsPsych.data.get().last(1).values()[0].difference
+      },
+      on_load: function(){
+	      document.querySelector('#jspsych-canvas-slider-response-response').addEventListener('click', function(e){
+		    e.target.style.visibility = 'show'})},
+      prompt: function () {
+        var con_left = avgcon + jsPsych.data.get().last(1).values()[0].difference
+        var con_right =  avgcon - jsPsych.data.get().last(1).values()[0].difference
+        var trial_contrast = jsPsych.data.get().last(2).values()[0].contrast
+        if (trial_contrast === 0) {
+          if (con_left > con_right) {
+              return " <p> If you choose the image on your left, what do you think is the chance of winning a reward? </p>"
+            }
+            else {
+              return " <p> If you choose the image on your right, what do you think is the chance of winning a reward? </p>"
+            }
+        }
+        else {
+          if (con_left > con_right) {
+              return " <p> If you choose the image on your right, what do you think is the chance of winning a reward? </p>"
+            }
+            else {
+              return " <p> If you choose the image on your left, what do you think is the chance of winning a reward? </p>"
+          }
+        }
+        },
+      on_finish: function (data) {
+            data.contrast_left = jsPsych.data.get().last(1).values()[0].contrast_left // stores the contrast level of left patch on this trial
+            data.contrast_right = jsPsych.data.get().last(1).values()[0].contrast_right // stores the contrast level of right patch on this trial
+            data.diff = jsPsych.data.get().last(1).values()[0].difference
+            index_mu = index_mu + 1;
+            data.state = s[jsPsych.currentTrial().index_mu]
+        }
+    };
 var trial_perceptual = {timeline: [fix, perceptual, fb, mu], repetitions: 25, randomize_order: false};
 var trial_perceptual_1 = {timeline: [fix, perceptual_1, fb, mu], repetitions: 25, randomize_order: false};
 var trial_reward = {timeline: [fix, reward, fb, mu], repetitions: 25, randomize_order: false};
