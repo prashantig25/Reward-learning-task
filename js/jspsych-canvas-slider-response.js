@@ -7,12 +7,12 @@
  * documentation: docs.jspsych.org
  *
  */
-
-
+​
+​
 jsPsych.plugins['canvas-slider-response'] = (function () {
-
+​
     var plugin = {};
-
+​
     plugin.info = {
         name: 'canvas-slider-response',
         description: '',
@@ -104,12 +104,12 @@ jsPsych.plugins['canvas-slider-response'] = (function () {
                 default: [500, 500],
                 description: 'Array containing the height (first value) and width (second value) of the canvas element.'
             }
-
+​
         }
     }
-
+​
     plugin.trial = function (display_element, trial) {
-
+​
         var html = '<div id="jspsych-canvas-slider-response-wrapper" style="margin: 0px 0px;">';
         html += '<div id="jspsych-canvas-slider-response-stimulus">' + '<canvas id="jspsych-canvas-stimulus" height="' + trial.canvas_size[0] + '" width="' + trial.canvas_size[1] + '"></canvas>' + '</div>';
         html += '<div class="jspsych-canvas-slider-response-container" style="position:relative; margin: 0 auto 3em auto; width:';
@@ -121,7 +121,7 @@ jsPsych.plugins['canvas-slider-response'] = (function () {
         html += '">';
         html += '<input type="range" class="jspsych-slider" value="' + trial.slider_start + '" min="' + trial.min + '" max="' + trial.max + '" step="' + trial.step + '" style="width: 100%;" id="jspsych-canvas-slider-response-response"></input>';
         //html += '<input type="range" class="jspsych-slider" value="'+trial.slider_start+'" min="'+trial.min+'" max="'+trial.max+'" step="'+trial.step+'" id="jspsych-canvas-slider-response-response"></input>';
-
+​
         html += '<div>'
         for (var j = 0; j < trial.labels.length; j++) {
             var width = 100 / (trial.labels.length - 1);
@@ -133,77 +133,77 @@ jsPsych.plugins['canvas-slider-response'] = (function () {
         html += '</div>';
         html += '</div>';
         html += '</div>';
-
+​
         if (trial.prompt !== null) {
             html += trial.prompt;
         }
-
+​
         // add submit button
         html += '<button id="jspsych-canvas-slider-response-next" class="jspsych-btn" ' + (trial.require_movement ? "disabled" : "") + '>' + trial.button_label + '</button>';
-
+​
         display_element.innerHTML = html;
-
+​
         // draw
         let c = document.getElementById("jspsych-canvas-stimulus")
         trial.stimulus(c)
-
+​
         var response = {
             rt: null,
             response: null
         };
-
+​
         if (trial.require_movement) {
             display_element.querySelector('#jspsych-canvas-slider-response-response').addEventListener('click', function () {
                 display_element.querySelector('#jspsych-canvas-slider-response-next').disabled = false;
             })
         }
-
+​
         display_element.querySelector('#jspsych-canvas-slider-response-next').addEventListener('click', function () {
             // measure response time
             var endTime = performance.now();
             response.rt = endTime - startTime;
             response.response = display_element.querySelector('#jspsych-canvas-slider-response-response').valueAsNumber;
-
+​
             if (trial.response_ends_trial) {
                 end_trial();
             } else {
                 display_element.querySelector('#jspsych-canvas-slider-response-next').disabled = true;
             }
-
+​
         });
-
+​
         function end_trial() {
-
+​
             jsPsych.pluginAPI.clearAllTimeouts();
-
+​
             // save data
             var trialdata = {
                 rt: response.rt,
                 response: response.response,
                 slider_start: trial.slider_start
             };
-
+​
             display_element.innerHTML = '';
-
+​
             // next trial
             jsPsych.finishTrial(trialdata);
         }
-
+​
         if (trial.stimulus_duration !== null) {
             jsPsych.pluginAPI.setTimeout(function () {
                 display_element.querySelector('#jspsych-canvas-slider-response-stimulus').style.visibility = 'hidden';
             }, trial.stimulus_duration);
         }
-
+​
         // end trial if trial_duration is set
         if (trial.trial_duration !== null) {
             jsPsych.pluginAPI.setTimeout(function () {
                 end_trial();
             }, trial.trial_duration);
         }
-
+​
         var startTime = performance.now();
     };
-
+​
     return plugin;
 })();
