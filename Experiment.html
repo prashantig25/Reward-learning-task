@@ -92,11 +92,7 @@ var nextblock = {
         type: "html-keyboard-response",
         stimulus: "<p style=\"font-size: 20px;color: #000000\"> Next block begins now. <br> The relationship between the contrast level of the images and reward may change now as compared to previous blocks. <br> Press a key when you are ready.</p>",
     };
-var completion_id = {
-        type: 'survey-text',
-        questions: [
-            {prompt: "The completion code for this study is 88C1F9FF. Please enter this code here.", name: 'Completion_code'}],
-    };
+
 var mu_missed = {
       type: 'canvas-slider-response',
       trial_duration: 6000,
@@ -668,7 +664,7 @@ timeline.push(block_1); timeline.push(nextblock); timeline.push(block_2); timeli
 timeline.push(block_4); timeline.push(nextblock); timeline.push(block_5); timeline.push(nextblock); timeline.push(block_6); timeline.push(nextblock);
 timeline.push(block_7); timeline.push(nextblock); timeline.push(block_8); timeline.push(nextblock); timeline.push(block_9); timeline.push(nextblock);
 timeline.push(block_10); timeline.push(nextblock); timeline.push(block_11); timeline.push(nextblock); timeline.push(block_12); timeline.push(nextblock);
-timeline.push(completion_id)
+
 jsPsych.init({
         timeline: timeline,
     });
