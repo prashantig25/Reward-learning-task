@@ -18,7 +18,6 @@
 </style>
 <script>
 var timeline = [];
-var timeline = [];
 var fix = {
         type: 'canvas-keyboard-response',
         stimulus: fixation,
@@ -34,6 +33,7 @@ var enter_trial = {
         type: "html-keyboard-response",
         stimulus: "<p style=\"font-size: 20px;color: #000000\"> Please press the <strong> ENTER </strong> key to proceed to the next trial. </p>",
         choices: ['Enter'],
+	trial_duration: 2000,
 };
 var welcome = {
         type: "html-keyboard-response",
@@ -374,7 +374,7 @@ var mu = {
       type: 'canvas-slider-response',
       canvas_size: [300, 500],
       data: {condition: 'mu'},
-      stimulus: gabor,
+      stimulus: gabor_mu,
       require_movement: false,
       response_ends_trial: true,
       trial_duration: 6000,
@@ -421,7 +421,7 @@ var mu = {
 var mu_1 = {
       type: 'canvas-slider-response',
       canvas_size: [300, 500],
-      stimulus: gabor,
+      stimulus: gabor_mu,
       data: {condition: 'mu'},
       require_movement: false,
       response_ends_trial: true,
