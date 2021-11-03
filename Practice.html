@@ -499,6 +499,40 @@ var fb = {
           data.contrast_right  = avgcon - data.difference
         }
     };
+	
+var trial_perceptual = {timeline: [fix, perceptual, fb, mu, enter_trial], repetitions: 25, randomize_order: false};
+var trial_perceptual_1 = {timeline: [fix, perceptual_1, fb, mu, enter_trial], repetitions: 25, randomize_order: false};
+var trial_reward = {timeline: [fix, reward, fb, mu, enter_trial], repetitions: 25, randomize_order: false};
+var trial_reward_1 = {timeline: [fix, reward_1, fb, mu, enter_trial], repetitions: 25, randomize_order: false};
+var trial_mixed = {timeline: [fix, mixed, fb, mu, enter_trial], repetitions: 25, randomize_order: false};
+var trial_mixed_1 = {timeline: [fix, mixed_1, fb, mu, enter_trial], repetitions: 25, randomize_order: false};
+    
+var trial_perceptual_mu_1 = {timeline: [fix, perceptual, fb, mu_1, enter_trial], repetitions: 25, randomize_order: false};
+var trial_perceptual_1_mu_1 = {timeline: [fix, perceptual_1, fb, mu_1, enter_trial], repetitions: 25, randomize_order: false};
+var trial_reward_mu_1 = {timeline: [fix, reward, fb, mu_1, enter_trial], repetitions: 25, randomize_order: false};
+var trial_reward_1_mu_1 = {timeline: [fix, reward_1, fb, mu_1, enter_trial], repetitions: 25, randomize_order: false};
+var trial_mixed_mu_1 = {timeline: [fix, mixed, fb, mu_1, enter_trial], repetitions: 25, randomize_order: false};
+var trial_mixed_1_mu_1 = {timeline: [fix, mixed_1, fb, mu_1, enter_trial], repetitions: 25, randomize_order: false};
+
+var prac_perc_0 = {timeline: [trial_perceptual, prac_score], repetitions: 1};
+var prac_perc_1 = {timeline: [trial_perceptual_1_mu_1, prac_score], repetitions: 1};
+var prac_perc_2 = {timeline: [trial_perceptual_1, prac_score], repetitions: 1};
+var prac_perc_3 = {timeline: [trial_perceptual_mu_1, prac_score], repetitions: 1};
+var prac_rew_0 = {timeline: [trial_reward_mu_1, prac_score], repetitions: 1};
+var prac_rew_1 = {timeline: [trial_reward_1, prac_score], repetitions: 1};
+var prac_rew_2 = {timeline: [trial_reward_1_mu_1, prac_score], repetitions: 1};
+var prac_rew_3 = {timeline: [trial_reward, prac_score], repetitions: 1};
+var prac_mix_0 = {timeline: [trial_mixed, prac_score], repetitions: 1};
+var prac_mix_1 = {timeline: [trial_mixed_1_mu_1, prac_score], repetitions: 1};
+var prac_mix_2 = {timeline: [trial_mixed_1, prac_score], repetitions: 1};
+var prac_mix_3 = {timeline: [trial_mixed_mu_1, prac_score], repetitions: 1};
+
+var prac_perc_array = [prac_perc_0, prac_perc_1, prac_perc_2, prac_perc_3];
+var prac_rew_array = [prac_rew_0, prac_rew_1, prac_rew_2, prac_rew_3];
+var prac_mix_array = [prac_mix_0, prac_mix_1, prac_mix_2, prac_mix_3];
+
+var practice = {timeline: [prac_perc_array[prac_rand], prac_rew_array[prac_rand], prac_mix_array[prac_rand]], repetitions: 1}
+timeline.push(practice)
 jsPsych.init({
     timeline: timeline,
 });
