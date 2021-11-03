@@ -511,31 +511,32 @@ var trial_reward_1_mu_1 = {timeline: [fix, reward_1, fb, mu_1, enter_trial], rep
 var trial_mixed_mu_1 = {timeline: [fix, mixed, fb, mu_1, enter_trial], repetitions: 25, randomize_order: false};
 var trial_mixed_1_mu_1 = {timeline: [fix, mixed_1, fb, mu_1, enter_trial], repetitions: 25, randomize_order: false};
 
-var prac_perc_0 = {timeline: [trial_perceptual, prac_score], repetitions: 1};
-var prac_perc_1 = {timeline: [trial_perceptual_1_mu_1, prac_score], repetitions: 1};
-var prac_perc_2 = {timeline: [trial_perceptual_1, prac_score], repetitions: 1};
-var prac_perc_3 = {timeline: [trial_perceptual_mu_1, prac_score], repetitions: 1};
-var prac_rew_0 = {timeline: [trial_reward_mu_1, prac_score], repetitions: 1};
-var prac_rew_1 = {timeline: [trial_reward_1, prac_score], repetitions: 1};
-var prac_rew_2 = {timeline: [trial_reward_1_mu_1, prac_score], repetitions: 1};
-var prac_rew_3 = {timeline: [trial_reward, prac_score], repetitions: 1};
-var prac_mix_0 = {timeline: [trial_mixed, prac_score], repetitions: 1};
-var prac_mix_1 = {timeline: [trial_mixed_1_mu_1, prac_score], repetitions: 1};
-var prac_mix_2 = {timeline: [trial_mixed_1, prac_score], repetitions: 1};
-var prac_mix_3 = {timeline: [trial_mixed_mu_1, prac_score], repetitions: 1};
+var block1 = {timeline: [trial_perceptual, missed_conditional, score], repetitions: 1};
+var block2 = {timeline: [trial_perceptual_1, missed_conditional, score], repetitions: 1};
+var block3 = {timeline: [trial_reward, missed_conditional, score], repetitions: 1};
+var block4 = {timeline: [trial_reward_1, missed_conditional, score], repetitions: 1};
+var block5 = {timeline: [trial_mixed, missed_conditional, score], repetitions: 1};
+var block6 = {timeline: [trial_mixed_1, missed_conditional, score], repetitions: 1};
+    
+var block7 = {timeline: [trial_perceptual_mu_1, missed_conditional, score], repetitions: 1};
+var block8 = {timeline: [trial_perceptual_1_mu_1, missed_conditional, score], repetitions: 1};
+var block9 = {timeline: [trial_reward_mu_1, missed_conditional, score], repetitions: 1};
+var block10 = {timeline: [trial_reward_1_mu_1, missed_conditional, score], repetitions: 1};
+var block11 = {timeline: [trial_mixed_mu_1, missed_conditional, score], repetitions: 1};
+var block12 = {timeline: [trial_mixed_1_mu_1, missed_conditional, score], repetitions: 1};
 
-var prac_perc_array = [prac_perc_0, prac_perc_1, prac_perc_2, prac_perc_3];
-var prac_rew_array = [prac_rew_0, prac_rew_1, prac_rew_2, prac_rew_3];
-var prac_mix_array = [prac_mix_0, prac_mix_1, prac_mix_2, prac_mix_3];
-
-var practice = {timeline: [prac_perc_array[prac_rand], prac_rew_array[prac_rand], prac_mix_array[prac_rand]], repetitions: 1}
-//timeline.push(enter_trial)
+var blockarray = [block1, block7, block6, block5, block4, block3, block2, block8, block9, block10, block11, block12];
+var blocks_shuffled = jsPsych.randomization.shuffle(blockarray); // first set of blocks
+var block_1 = blocks_shuffled[0]; var block_2 = blocks_shuffled[1]; var block_3 = blocks_shuffled[2]; var block_4 = blocks_shuffled[3]; 
+var block_5 = blocks_shuffled[4]; var block_6 = blocks_shuffled[5]; var block_7 = blocks_shuffled[6]; var block_8 = blocks_shuffled[7];
+var block_9 = blocks_shuffled[8]; var block_10 = blocks_shuffled[9]; var block_11 = blocks_shuffled[10]; var block_12 = blocks_shuffled[11];
+var blocks_shuffled_array = [block_1, nextblock, block_2, nextblock, block_3, nextblock, block_4, nextblock, block_5, nextblock, block_6, nextblock, block_7, nextblock, block_8, nextblock, block_9, nextblock, block_10, nextblock, block_11, nextblock]
+var blocks = {timeline: [blocks_shuffled_array], repetitions:1}
 timeline.push(welcome)
-timeline.push(practice)
-timeline.push(completion_id)
-jsPsych.init({
-        timeline: timeline,
-    });
+timeline.push(block_1); timeline.push(nextblock); timeline.push(block_2); timeline.push(nextblock); timeline.push(block_3); timeline.push(nextblock);
+timeline.push(block_4); timeline.push(nextblock); timeline.push(block_5); timeline.push(nextblock); timeline.push(block_6); timeline.push(nextblock);
+timeline.push(block_7); timeline.push(nextblock); timeline.push(block_8); timeline.push(nextblock); timeline.push(block_9); timeline.push(nextblock);
+timeline.push(block_10); timeline.push(nextblock); timeline.push(block_11); timeline.push(nextblock); timeline.push(block_12); timeline.push(nextblock);
 
 jsPsych.init({
         timeline: timeline,
