@@ -17,6 +17,12 @@
 </style>
 <script>
 var timeline = [];
+var enter_trial = {
+        type: "html-keyboard-response",
+        stimulus: "<p style=\"font-size: 20px;color: #000000\"> Please press the <strong> ENTER </strong> key to proceed to the next trial. </p>",
+        choices: ['Enter'],
+        trial_duration: 2000,
+};
 var fix = {
         type: 'canvas-keyboard-response',
         stimulus: fixation,
@@ -143,11 +149,6 @@ var missed_conditional = { // first runs the conditional to check if the missed 
     }
 };
 
-var enter_trial = {
-        type: "html-keyboard-response",
-        stimulus: "<p style=\"font-size: 20px;color: #000000\"> Please press the <strong> ENTER </strong> key to proceed to the next trial. </p>",
-        choices: ['Enter'],
-};
 var welcome = {
         type: "html-keyboard-response",
         stimulus: "<p style=\"font-size: 20px;color: #000000\"> Welcome to the study. </p> <p> Please make sure that you are participating in this study in a calm and comfortable environment. Please place your desktop screen at one-arm distance from your eyes. <br> There are instructions at every stage of the study. Please read and understand them carefully. <br> If you are running this study on Safari, please exit now and restart the study on any other browser (e.g. Chrome, Firefox, MS Edge). </p> <p> Press any key to process forward.</p>",
@@ -255,7 +256,7 @@ var perceptual = {
             data.contrast_left = jsPsych.currentTrial().contrast_left // stores the contrast level of left patch on this trial
             data.contrast_right = jsPsych.currentTrial().contrast_right // stores the contrast level of right patch on this trial
             data.diff = jsPsych.currentTrial().difference
-            trialcounter = trialcounter + 3 // increases the trial counter to include fixation, stimulus and feedback
+            trialcounter = trialcounter + 5 // increases the trial counter to include fixation, stimulus and feedback
             index = index + 1; // increase the index by 1 so that the next trial, the next state can be chosen from the state array
             data.state = s[jsPsych.currentTrial().index] // store the state of the trial
             data.reward = jsPsych.currentTrial().a // store the action for this trial
@@ -308,7 +309,7 @@ var perceptual_1 = {
             data.contrast_left = jsPsych.currentTrial().contrast_left // stores the contrast level of left patch on this trial
             data.contrast_right = jsPsych.currentTrial().contrast_right // stores the contrast level of right patch on this trial
             data.diff = jsPsych.currentTrial().difference
-            trialcounter = trialcounter + 3 // increases the trial counter to include fixation, stimulus and feedback
+            trialcounter = trialcounter + 5 // increases the trial counter to include fixation, stimulus and feedback
             index = index + 1;
             data.state = s[jsPsych.currentTrial().index]
             data.reward = jsPsych.currentTrial().a
@@ -361,7 +362,7 @@ var reward = {
             data.contrast_left = jsPsych.currentTrial().contrast_left // stores the contrast level of left patch on this trial
             data.contrast_right = jsPsych.currentTrial().contrast_right // stores the contrast level of right patch on this trial
             data.diff = jsPsych.currentTrial().difference
-            trialcounter = trialcounter + 3 // increases the trial counter to include fixation, stimulus and feedback
+            trialcounter = trialcounter + 5 // increases the trial counter to include fixation, stimulus and feedback
             index = index + 1;
             data.state = s[jsPsych.currentTrial().index]
             data.reward = jsPsych.currentTrial().a
@@ -414,7 +415,7 @@ var reward_1 = {
             data.contrast_left = jsPsych.currentTrial().contrast_left // stores the contrast level of left patch on this trial
             data.contrast_right = jsPsych.currentTrial().contrast_right // stores the contrast level of right patch on this trial
             data.diff = jsPsych.currentTrial().difference
-            trialcounter = trialcounter + 3 // increases the trial counter to include fixation, stimulus and feedback
+            trialcounter = trialcounter + 5 // increases the trial counter to include fixation, stimulus and feedback
             index = index + 1;
             data.state = s[jsPsych.currentTrial().index]
             data.reward = jsPsych.currentTrial().a
@@ -467,7 +468,7 @@ var mixed = {
             data.contrast_left = jsPsych.currentTrial().contrast_left // stores the contrast level of left patch on this trial
             data.contrast_right = jsPsych.currentTrial().contrast_right // stores the contrast level of right patch on this trial
             data.diff = jsPsych.currentTrial().difference
-            trialcounter = trialcounter + 3 // increases the trial counter to include fixation, stimulus and feedback
+            trialcounter = trialcounter + 5 // increases the trial counter to include fixation, stimulus and feedback
             index = index + 1;
             data.state = s[jsPsych.currentTrial().index]
             data.reward = jsPsych.currentTrial().a
@@ -531,7 +532,7 @@ var mu = {
       type: 'canvas-slider-response',
       canvas_size: [300, 500],
       data: {condition: 'mu'},
-      stimulus: gabor,
+      stimulus: gabor_mu,
       require_movement: false,
       response_ends_trial: true,
       trial_duration: 6000,
@@ -578,7 +579,7 @@ var mu = {
 var mu_1 = {
       type: 'canvas-slider-response',
       canvas_size: [300, 500],
-      stimulus: gabor,
+      stimulus: gabor_mu,
       data: {condition: 'mu'},
       require_movement: false,
       response_ends_trial: true,
