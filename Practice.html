@@ -520,5 +520,8 @@ var prac_mix_array = [prac_mix_0, prac_mix_1, prac_mix_2, prac_mix_3];
 var practice = {timeline: [prac_perc_array[prac_rand], prac_rew_array[prac_rand], prac_mix_array[prac_rand]], repetitions: 1}
 
 timeline.push(practice)
+jsPsych.init({
+    timeline: timeline,
+});
 </script>
 </html>
