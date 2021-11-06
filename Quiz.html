@@ -20,6 +20,12 @@ var demo = {
         "<br> If you want to choose the image presented on your left, please press the <strong>left arrow </strong> on your keyboard. <br>If you want to choose the image presented on your right, press the <strong>right arrow </strong>on your keyboard.<br>" +
         " <br> Please press any key to proceed if you have seen the images. </p>",
     };
+var enter_trial = {
+        type: "html-keyboard-response",
+        stimulus: "<p style=\"font-size: 20px;color: #000000; position: fixed; top: 48%; left: 37%;\"> Please press the <strong> ENTER </strong> key to proceed. </p>",
+        choices: ['Enter'],
+        trial_duration: 2000,
+};
 var lc_lose = {
         type: 'image-keyboard-response',
         stimulus: '0.5_green.png',
@@ -46,28 +52,26 @@ var demo_slider = {
         type: 'image-keyboard-response',
         stimulus: 'demo_slider.png',
         stimulus_height: 400,
-        stimulus_width: 900,
+        stimulus_width: 1100,
         prompt: "<p>  In the next part of the trial, you will be presented with the <strong> slider </strong> that is displayed above. In this part of the trial, you will be presented with two images of different contrast levels. You will be asked to indicate <strong> the chance (in percent) </strong> with which you think you would win 1 point, if you were to choose a particular image. You should be able to estimate the chance of winning 1 point after a hypothetical choice, based on the feedback of your previous choices. " +
         "You can indicate your response by clicking on the slider. You can drag through the slider, to adjust your response as you like. Please press any key to proceed if you have understood the instructions. </p>",
         response_ends_trial: true,
     }
-var welcome = {
-        type: "html-keyboard-response",
-        stimulus: "<p style=\"font-size: 20px;color: #000000\"> Welcome to the study. </p> <p> Please make sure that you are participating in this study in a calm and comfortable environment. Please place your desktop screen at one-arm distance from your eyes. <br> There are instructions at every stage of the study. Please read and understand them carefully. <br> If you are running this study on Safari, please exit now and restart the study on any other browser (e.g. Chrome, Firefox, MS Edge). </p> <p> Press any key to process forward.</p>",
-    };
-var survey_id = {
-        type: 'survey-text',
-        questions:[
-            {prompt: "Please enter your correct unique Prolific ID here.", name: 'Prolific_ID'}],
-        button_label:'Next',
-    };
+var demo_enter = {
+        type: 'image-keyboard-response',
+        stimulus: 'enter_trial.png',
+        //stimulus_height: 400,
+        //stimulus_width: 1100,
+        prompt: "<p>  After responding with the slider, you will be presented with instructions as shown in the image above. Then, you are required to press the <strong> ENTER </strong> key to proceed to the next trial. Please press any key if you have understood these instructions. </p>",
+        response_ends_trial: true,
+    }
 var instructions_phase1 = {
-        type: "html-keyboard-response", stimulus: "<p> Here are some instructions to help you understand the task better. This is the general structure of a trial. In one trial, you will be asked to make a choice. Once you make a choice, you will be presented with feedback to inform you about the number points you won on trial. </p>" +
-        "<p> After the feedback, you will be presented with the slider through which you have to indicate the percent chance of winning a reward, if you make a particular choice. Please press any key, to get a better understanding of how to make a choice in the task. </p>"
+        type: "html-keyboard-response", stimulus: "<p> The general structure of a trial is as follows. You will be asked to make a choice. Then, you will be presented with feedback to inform you about the number of points you won on trial. </p>" +
+        "<p> After the feedback, you will be presented with the slider through which you have to indicate the percent chance of winning a reward, if you make a particular choice. Please press any key to proceed to the next slide. </p>"
     };
 var instructions_phase2 = {
-        type: "html-keyboard-response", stimulus: "<p style=\"font-size: 20px;color: #000000\"> Here is a summarised explanation about how to make a choice in the task.</p>" +
-            "<p> A fixation cross which looks like this (+) will precede each trial. Please fixate on the cross before the start of the trial. "+
+        type: "html-keyboard-response", stimulus: "<p style=\"font-size: 20px;color: #000000\"> Here is a summary on how to make a choice. A fixation cross which looks like this (+) will precede each trial. </p>" +
+            "<p> Please fixate on the cross before the start of the trial. "+
             "In each trial, you will be presented with two images. Both images may have different levels of contrast (i.e. brightness) on each trial. Your task is to choose one of these two images."+
             "<br> <p> If you want to choose the image presented on your left, please press the <strong>left arrow </strong> on your keyboard. <br>If you want to choose the image presented on your right, press the <strong>right arrow </strong>on your keyboard.<br>"+
             " Your main aim is to figure out which image you should choose. On each block of trials there is a relationship between the contrast (brightness) level of the image and how often you may win 1 point if you choose that image. " +
@@ -77,14 +81,14 @@ var instructions_phase2 = {
             "<p> If you have understood these instructions, please press any key to proceed to the next phase of instructions.</p>"
     };
 var instructions_phase3 = {
-        type: "html-keyboard-response", stimulus: "<p style=\"font-size: 20px;color: #000000\"> Here is a summarised explanation about how to use the slider to in the task.</p>" +
+        type: "html-keyboard-response", stimulus: "<p style=\"font-size: 20px;color: #000000\"> Here is a summary on how to use the slider in the task.</p>" +
             "<p> Once you make a choice and receive feedback, you will be presented with a slider that ranges between 0 to 100 percent/ "+
             "Again, you will be presented with two images. Both images may have different levels of contrast (i.e. brightness) on each trial. Additionally, you will be presented with a hypothetical choice that you could have made. "+
             "<br> <p> Based on this hypothetical choice scenario, you are expected to indicate the chances with which you can win 1 point on the scale of 0 to 100 percent. <br> To select the chance, you can drag the slider based on the labels of the slider. You could also directly click on the slider above a particular percent to respond. </p><br>"+
-            " Once you respond, please click on the <strong> Next trial </strong> button to proceed to the next trial. " +
+            " After your response, please click on the <strong> Continue </strong> button to proceed in the task. " +
             "<p> If you have understood these instructions, please press any key to proceed to the experiment.</p>"
   };
-  
+
 var questions = [
         {
             prompt: "Once you have clicked on the slider to respond, how can you use the slider to re-adjust your response to a desired percent level.",
@@ -237,8 +241,10 @@ var quiz = {
         ],
 
     };
-var demo_timeline = {timeline: [demo, lc_lose, lc_win, hc_win, hc_lose, demo_slider]};
+
+var demo_timeline = {timeline: [demo, lc_lose, lc_win, hc_win, hc_lose, demo_slider, demo_enter]};
 var instructions = {timeline: [instructions_phase1, instructions_phase2, instructions_phase3]};
+
 timeline.push(demo_timeline)
 timeline.push(quizProcedure)
 timeline.push(instructions)
