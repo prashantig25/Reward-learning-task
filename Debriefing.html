@@ -18,7 +18,7 @@
 var timeline = [];
 var debrief = [
         {
-            prompt: "I used the slider to indicate the chances of winning 1 point, if I had made the hypothetical choice that was presented. ",
+            prompt: "I used the slider to indicate the chances of winning 1 point, if I chose the image with the green border. ",
             options: [
                 "True",
                 "False",
@@ -83,7 +83,8 @@ var debrief = [
     jsPsych.init({
         timeline: timeline,
     });
+    // Reference: https://github.com/moltaire/causality_task/ 
 </script>
 </html>
 
-// Reference: https://github.com/moltaire/causality_task/ 
+
