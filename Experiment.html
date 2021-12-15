@@ -76,18 +76,18 @@ var fb = { // feedback for choice
           var blocktype = jsPsych.data.get().last(2).values()[0].block // blocktype is dependent on condition i.e. 1 = perceptual; 2 = mixed and 3 = reward
           if ( blocktype === 1 || blocktype === 2) { 
             if (s_mu[data.index] === 0) { // state that the slider belongs to
-                data.difference = high_min_neg // contrast differences for s = 0
+                data.difference = -0.15 // contrast differences for s = 0
             }
             else {
-                data.difference = high_max // contrast differences for s = 1
+                data.difference = 0.15 // contrast differences for s = 1
             }
           }
           else {
               if (s_mu[data.index] === 0) { // state that the slider belongs to
-                data.difference = low_min_neg // contrast differences for s = 0
+                data.difference = -0.45 // contrast differences for s = 0
               }
               else {
-                data.difference = low_max // contrast differences for s = 0
+                data.difference = 0.45 // contrast differences for s = 0
               }
             }
           
