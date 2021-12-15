@@ -21,11 +21,7 @@
 <script>
 var timeline = [];
 
-var preload = {
-    type: 'preload',
-    images: ['js/demo.png','js/demo_slider.png','js/0.5_green.png','js/1_Green.png', 'js/1_Red.png', 'js/0.5_Red.png', 'js/enter_trial.png']
-}
-timeline.push(preload);
+
 var demo = {
         type: 'image-keyboard-response',
         stimulus: 'js/demo.png',
@@ -57,7 +53,7 @@ var hc_lose = {
     }
 var demo_slider_red = {
         type: 'image-keyboard-response',
-        stimulus: 'demo_slider_red.png',
+        stimulus: 'js/demo_slider_red.png',
         stimulus_height: 400,
         stimulus_width: 1100,
         prompt: "<p>  In the next part of the trial, you will be presented with the <strong> slider </strong> that is displayed above. In this part of the trial, you will be presented with two images of different contrast levels. You will be asked to indicate <strong> the chance (in percent) </strong> with which you think you would win 1 point, if you were to choose the image with the red <strong> border </strong>. You should be able to estimate the chance of winning 1 point after a hypothetical choice, based on the feedback of your previous choices. " +
@@ -66,7 +62,7 @@ var demo_slider_red = {
     }
 var demo_slider_green = {
         type: 'image-keyboard-response',
-        stimulus: 'demo_slider_green.png',
+        stimulus: 'js/demo_slider_green.png',
         stimulus_height: 400,
         stimulus_width: 1100,
         prompt: "<p>  In the next part of the trial, you will be presented with the <strong> slider </strong> that is displayed above. Now, the border changes its color from <strong> red </strong> to <strong> green</strong>. You will be asked to indicate <strong> the chance (in percent) </strong> with which you think you would win 1 point, if you were to choose the image with the border. You should be able to estimate the chance of winning 1 point after a hypothetical choice, based on the feedback of your previous choices. " +
@@ -75,13 +71,13 @@ var demo_slider_green = {
     }
 var demo_enter = {
         type: 'image-keyboard-response',
-        stimulus: 'enter_trial.png',
+        stimulus: 'js/enter_trial.png',
         prompt: "<p>  After responding with the slider, you will be presented with instructions as shown in the image above. Then, you are required to press the <strong> ENTER </strong> key to proceed to the next trial. Please press any key if you have understood these instructions. </p>",
         response_ends_trial: true,
     }
 var incongruent = {
         type: 'image-keyboard-response',
-        stimulus: 'incongruent.png',
+        stimulus: 'js/incongruent.png',
         prompt: "<p>  <strong> Please note: </strong> that there may be trials where you would win 0 points more often after choosing a certain image and still, you will be asked to estimate the chance of winning 1 point for the same image, with the slider. For instance, in the image above, the brigher image won 0 points but the participant is asked to report the chances of winning 1 point, if the brighter image is chosen. Please press any key if you have understood these instructions. </p>",
         response_ends_trial: true,
     }
@@ -295,7 +291,7 @@ var quiz = {
         ],
 
     };
-var demo_timeline = {timeline: [demo, lc_lose, lc_win, hc_win, hc_lose, demo_slider, demo_enter]};
+var demo_timeline = {timeline: [demo, lc_lose, lc_win, hc_win, hc_lose, demo_slider_red, demo_slider_green, incongruent, demo_enter]};
 var instructions = {timeline: [instructions_phase1, instructions_phase2, instructions_phase3]};
 
 timeline.push(demo_timeline)
@@ -304,7 +300,8 @@ timeline.push(instructions)
 jsPsych.init({
         timeline: timeline,
     });
+//Code for quiz reference: https://github.com/moltaire/causality_task/
 </script>
 </html>
 
-// Code for quiz reference: https://github.com/moltaire/causality_task/ 
+
