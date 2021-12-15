@@ -7,7 +7,9 @@
     <script src="js/additionals.js"></script>
     <script src="js/custom.css"></script>
     <script src="js/jspsych-canvas-slider-response.js"></script>
+    <script src="js/jspsych-survey-text.js"></script>
     <script src="js/jspsych-html-keyboard-response.js"></script>
+    <script src="js/jspsych-canvas-keyboard-multiple-response.js"></script>
     <script src="js/jspsych-canvas-keyboard-response.js"></script>
     <link href="js/jspsych.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -18,6 +20,12 @@
 </style>
 <script>
 var timeline = [];
+var enter_trial = {
+    type: "html-keyboard-response",
+    stimulus: "<p style=\"font-size: 20px;color: #000000; position: relative; top: 20px; left: 5px;\"> Please press the <strong> ENTER </strong> key to proceed. </p>",
+    choices: ['Enter'],
+    trial_duration: 2000,
+};
 var fix = { // fixation cross
         type: 'canvas-keyboard-response',
         stimulus: fixation,
@@ -143,9 +151,9 @@ var perceptual = { // choice phase with patches belonging to the perceptual cond
                 data.correct = true;
                 data.stim = 0; // keeps the stim value at 0 because the participant has not missed a trial
             } else if (length === 0) { // if the participant does not respond to a particular trial
-                    missed.push(1), // increases a missed trial by 1
-                    missed_fb.push(jsPsych.currentTrial().reward),  // add this trial's correct response to the missed_fb array so that it can be repeated with the missed trial
-                    missed_con.push(jsPsych.currentTrial().contrast_left), // add this trial's left contrast to the missed_con array so that it can be repeated with the missed trial
+                    missed.push(1) // increases a missed trial by 1
+                    missed_fb.push(jsPsych.currentTrial().reward)  // add this trial's correct response to the missed_fb array so that it can be repeated with the missed trial
+                    missed_con.push(jsPsych.currentTrial().contrast_left) // add this trial's left contrast to the missed_con array so that it can be repeated with the missed trial
                     missed_con1.push(jsPsych.currentTrial().contrast_right) // add this trial's right contrast to the missed_con1 array so that it can be repeated with the missed trial
                     missed_block.push(jsPsych.currentTrial().block) // add this trial's block type to the missed_block array
                     missed_contrast.push(jsPsych.currentTrial().contrast) // add this trial's winning contrast to the missed_block array
@@ -199,9 +207,9 @@ var perceptual_1 = { // choice phase with patches belonging to the perceptual co
                 data.correct = true;
                 data.stim = 0;
             } else if (length === 0) {
-                missed.push(1),
-                    missed_fb.push(jsPsych.currentTrial().reward),
-                    missed_con.push(jsPsych.currentTrial().contrast_left),
+                missed.push(1)
+                    missed_fb.push(jsPsych.currentTrial().reward)
+                    missed_con.push(jsPsych.currentTrial().contrast_left)
                     missed_con1.push(jsPsych.currentTrial().contrast_right)
                     missed_block.push(jsPsych.currentTrial().block)
                     missed_contrast.push(jsPsych.currentTrial().contrast)
@@ -255,9 +263,9 @@ var reward = { // choice phase with patches belonging to the reward condition wi
                 data.correct = true;
                 data.stim = 0;
             } else if (length === 0) {
-                missed.push(1),
-                    missed_fb.push(jsPsych.currentTrial().reward),
-                    missed_con.push(jsPsych.currentTrial().contrast_left),
+                missed.push(1)
+                    missed_fb.push(jsPsych.currentTrial().reward)
+                    missed_con.push(jsPsych.currentTrial().contrast_left)
                     missed_con1.push(jsPsych.currentTrial().contrast_right)
                     missed_block.push(jsPsych.currentTrial().block)
                     missed_contrast.push(jsPsych.currentTrial().contrast)
@@ -311,9 +319,9 @@ var reward_1 = { // choice phase with patches belonging to the reward condition 
                 data.correct = true;
                 data.stim = 0;
             } else if (length === 0) {
-                missed.push(1),
-                    missed_fb.push(jsPsych.currentTrial().reward),
-                    missed_con.push(jsPsych.currentTrial().contrast_left),
+                missed.push(1)
+                    missed_fb.push(jsPsych.currentTrial().reward)
+                    missed_con.push(jsPsych.currentTrial().contrast_left)
                     missed_con1.push(jsPsych.currentTrial().contrast_right)
                     missed_block.push(jsPsych.currentTrial().block)
                     missed_contrast.push(jsPsych.currentTrial().contrast)
@@ -367,9 +375,9 @@ var mixed = { // choice phase with patches belonging to the mixed condition with
                 data.correct = true;
                 data.stim = 0;
             } else if (length === 0) {
-                missed.push(1),
-                    missed_fb.push(jsPsych.currentTrial().reward),
-                    missed_con.push(jsPsych.currentTrial().contrast_left),
+                missed.push(1)
+                    missed_fb.push(jsPsych.currentTrial().reward)
+                    missed_con.push(jsPsych.currentTrial().contrast_left)
                     missed_con1.push(jsPsych.currentTrial().contrast_right)
                     missed_block.push(jsPsych.currentTrial().block)
                     missed_contrast.push(jsPsych.currentTrial().contrast)
@@ -423,9 +431,9 @@ var mixed_1 = { // choice phase with patches belonging to the mixed condition wi
                 data.correct = true;
                 data.stim = 0;
             } else if (length === 0) {
-                missed.push(1),
-                    missed_fb.push(jsPsych.currentTrial().reward),
-                    missed_con.push(jsPsych.currentTrial().contrast_left),
+                missed.push(1)
+                    missed_fb.push(jsPsych.currentTrial().reward)
+                    missed_con.push(jsPsych.currentTrial().contrast_left)
                     missed_con1.push(jsPsych.currentTrial().contrast_right)
                     missed_block.push(jsPsych.currentTrial().block)
                     missed_contrast.push(jsPsych.currentTrial().contrast)
@@ -501,71 +509,9 @@ var mu = { // part of the trial with the slider; congruent slider trial i.e. the
             data.contrast_left = jsPsych.currentTrial().contrast_left // stores the contrast level of left patch on this trial
             data.contrast_right = jsPsych.currentTrial().contrast_right // stores the contrast level of right patch on this trial
             index_mu = index_mu + 1; // increase the index_mu for the next trial. 
-            data.state = s[jsPsych.currentTrial().index_mu] // state that the patches in the slider phase belonged to
+            data.state = s[index_mu] // state that the patches in the slider phase belonged to
         }
     };
-var mu_wait = { // slider with no participant responses allowed for congruent slider trial i.e. the more rewarded patch in the trial phase is used for mu estimates
-      type: 'canvas-slider-response',
-      canvas_size: [300, 500],
-      data: {condition: 'mu_congruent_wait'},
-      stimulus: gabor_mu_wait,
-      response_ends_trial: false,
-      require_movement: true,
-      trial_duration: 1500,
-      labels: ['0%','25%', '50%', '75%', '100%'],
-      on_start: function(mu_wait) {
-            document.body.style.cursor = "auto";
-            var trial_contrast = jsPsych.data.get().last(2).values()[0].contrast
-            mu_wait.contrast_left = avgcon + jsPsych.data.get().last(1).values()[0].difference // calculate the contrast for the left gabor based on this trial's difference
-            mu_wait.contrast_right  = avgcon - jsPsych.data.get().last(1).values()[0].difference
-            if (trial_contrast === 0) {
-                if (jsPsych.currentTrial().contrast_left > jsPsych.currentTrial().contrast_right) {
-                  mu_wait.x = 305; //right patch
-                }
-                else {
-                  mu_wait.x = 100; //left patch 
-                }
-            }
-            else {
-                if (jsPsych.currentTrial().contrast_left > jsPsych.currentTrial().contrast_right) {
-                  mu_wait.x = 100; // left patch
-                }
-                else {
-                  mu_wait.x = 305; //right patch
-               }
-            }
-      },
-      on_load: function () { // to disable the slider for the wait period
-    var slider = document.getElementsByTagName('input')[0];
-    slider.disabled = true;
-  },
-      prompt: function () {
-        var con_left = avgcon + jsPsych.data.get().last(1).values()[0].difference
-        var con_right =  avgcon - jsPsych.data.get().last(1).values()[0].difference
-        var trial_contrast = jsPsych.data.get().last(2).values()[0].contrast
-        if (trial_contrast === 0) {
-          if (con_left > con_right) {
-              return `<p> If you choose the image on your <strong> right</strong>, what do you think is the chance of winning a reward? </p>  `
-            }
-            else {
-              return `<p> If you choose the image on your <strong> left</strong>, what do you think is the chance of winning a reward? </p> `
-            }
-        }
-        else {
-          if (con_left > con_right) {
-              return `<p> If you choose the image on your <strong> left</strong>, what do you think is the chance of winning a reward? </p> `
-            }
-            else {
-              return `<p> If you choose the image on your <strong> right</strong>, what do you think is the chance of winning a reward? </p> `
-          }
-        }
-        },
-      on_finish: function (data) {
-            data.contrast_left = jsPsych.currentTrial().contrast_left// stores the contrast level of left patch on this trial
-            data.contrast_right = jsPsych.currentTrial().contrast_right // stores the contrast level of right patch on this trial
-        }
-    };  
-    
 var mu_1 = { // same as mu except incongruent slider trial i.e. the less rewarded patch in the trial phase is used for mu estimates
       type: 'canvas-slider-response',
       canvas_size: [300, 500],
@@ -622,70 +568,131 @@ var mu_1 = { // same as mu except incongruent slider trial i.e. the less rewarde
             data.contrast_left = jsPsych.currentTrial().contrast_left // stores the contrast level of left patch on this trial
             data.contrast_right = jsPsych.currentTrial().contrast_right // stores the contrast level of right patch on this trial
             index_mu = index_mu + 1;
-            data.state = s[jsPsych.currentTrial().index_mu]
+            data.state = s[index_mu]
         }
     };
 var mu_wait_1 = { // slider with no prticipant responses allowed for incongruent slider trial i.e. the less rewarded patch in the trial phase is used for mu estimates
-      type: 'canvas-slider-response',
-      canvas_size: [300, 500],
-      data: {condition: 'mu_incongruent_wait'},
-      stimulus: gabor_mu_wait,
-      response_ends_trial: false,
-      require_movement: true,
-      trial_duration: 1500,
-      labels: ['0%','25%', '50%', '75%', '100%'],
-      on_start: function(mu_wait_1) {
-            document.body.style.cursor = "auto";
-            var trial_contrast = jsPsych.data.get().last(2).values()[0].contrast
-            mu_wait_1.contrast_left = avgcon + jsPsych.data.get().last(1).values()[0].difference // calculate the contrast for the left gabor based on this trial's difference
-            mu_wait_1.contrast_right  = avgcon - jsPsych.data.get().last(1).values()[0].difference
-            if (trial_contrast === 0) {
-                if (jsPsych.currentTrial().contrast_left > jsPsych.currentTrial().contrast_right) {
-                  mu_wait_1.x = 100; //right
-                }
-                else {
-                  mu_wait_1.x = 305; //left 
-                }
+    type: 'canvas-slider-response',
+    canvas_size: [300, 500],
+    data: {condition: 'mu_incongruent_wait'},
+    stimulus: gabor_mu_wait,
+    response_ends_trial: false,
+    require_movement: true,
+    trial_duration: 1500,
+    labels: ['0%','25%', '50%', '75%', '100%'],
+    on_start: function(mu_wait_1) {
+        document.body.style.cursor = "auto";
+        var trial_contrast = jsPsych.data.get().last(2).values()[0].contrast
+        mu_wait_1.contrast_left = avgcon + jsPsych.data.get().last(1).values()[0].difference // calculate the contrast for the left gabor based on this trial's difference
+        mu_wait_1.contrast_right  = avgcon - jsPsych.data.get().last(1).values()[0].difference
+        if (trial_contrast === 0) {
+            if (jsPsych.currentTrial().contrast_left > jsPsych.currentTrial().contrast_right) {
+                mu_wait_1.x = 100; //right
             }
             else {
-                if (jsPsych.currentTrial().contrast_left > jsPsych.currentTrial().contrast_right) {
-                  mu_wait_1.x = 305; // left
-                }
-                else {
-                  mu_wait_1.x = 100; //right
-               }
+                mu_wait_1.x = 305; //left
             }
-      },
-      on_load: function () {
-    var slider = document.getElementsByTagName('input')[0];
-    slider.disabled = true;
-      },
-      prompt: function () {
+        }
+        else {
+            if (jsPsych.currentTrial().contrast_left > jsPsych.currentTrial().contrast_right) {
+                mu_wait_1.x = 305; // left
+            }
+            else {
+                mu_wait_1.x = 100; //right
+            }
+        }
+    },
+    on_load: function () {
+        var slider = document.getElementsByTagName('input')[0];
+        slider.disabled = true;
+    },
+    prompt: function () {
         var con_left = avgcon + jsPsych.data.get().last(1).values()[0].difference
         var con_right =  avgcon - jsPsych.data.get().last(1).values()[0].difference
         var trial_contrast = jsPsych.data.get().last(2).values()[0].contrast
         if (trial_contrast === 0) {
-          if (con_left > con_right) {
-              return `<p> If you choose the image on your <strong> left</strong>, what do you think is the chance of winning a reward? </p>  `
+            if (con_left > con_right) {
+                return `<p> If you choose the image on your <strong> left</strong>, what do you think is the chance of winning a reward? </p>  `
             }
             else {
-              return `<p> If you choose the image on your <strong> right</strong>, what do you think is the chance of winning a reward? </p> `
+                return `<p> If you choose the image on your <strong> right</strong>, what do you think is the chance of winning a reward? </p> `
             }
         }
         else {
-          if (con_left > con_right) {
-              return `<p> If you choose the image on your <strong> right</strong>, what do you think is the chance of winning a reward? </p> `
+            if (con_left > con_right) {
+                return `<p> If you choose the image on your <strong> right</strong>, what do you think is the chance of winning a reward? </p> `
             }
             else {
-              return `<p> If you choose the image on your <strong> left</strong>, what do you think is the chance of winning a reward? </p> `
-          }
+                return `<p> If you choose the image on your <strong> left</strong>, what do you think is the chance of winning a reward? </p> `
+            }
         }
-        },
-      on_finish: function (data) {
-            data.contrast_left = jsPsych.currentTrial().contrast_left // stores the contrast level of left patch on this trial
-            data.contrast_right = jsPsych.currentTrial().contrast_right // stores the contrast level of right patch on this trial
+    },
+    on_finish: function (data) {
+        data.contrast_left = jsPsych.currentTrial().contrast_left // stores the contrast level of left patch on this trial
+        data.contrast_right = jsPsych.currentTrial().contrast_right // stores the contrast level of right patch on this trial
+    }
+};
+var mu_wait = { // slider with no participant responses allowed for congruent slider trial i.e. the more rewarded patch in the trial phase is used for mu estimates
+    type: 'canvas-slider-response',
+    canvas_size: [300, 500],
+    data: {condition: 'mu_congruent_wait'},
+    stimulus: gabor_mu_wait,
+    response_ends_trial: false,
+    require_movement: true,
+    trial_duration: 1500,
+    labels: ['0%','25%', '50%', '75%', '100%'],
+    on_start: function(mu_wait) {
+        document.body.style.cursor = "auto";
+        var trial_contrast = jsPsych.data.get().last(2).values()[0].contrast
+        mu_wait.contrast_left = avgcon + jsPsych.data.get().last(1).values()[0].difference // calculate the contrast for the left gabor based on this trial's difference
+        mu_wait.contrast_right  = avgcon - jsPsych.data.get().last(1).values()[0].difference
+        if (trial_contrast === 0) {
+            if (jsPsych.currentTrial().contrast_left > jsPsych.currentTrial().contrast_right) {
+                mu_wait.x = 305; //right patch
+            }
+            else {
+                mu_wait.x = 100; //left patch
+            }
         }
-    };  
+        else {
+            if (jsPsych.currentTrial().contrast_left > jsPsych.currentTrial().contrast_right) {
+                mu_wait.x = 100; // left patch
+            }
+            else {
+                mu_wait.x = 305; //right patch
+            }
+        }
+    },
+    on_load: function () { // to disable the slider for the wait period
+        var slider = document.getElementsByTagName('input')[0];
+        slider.disabled = true;
+    },
+    prompt: function () {
+        var con_left = avgcon + jsPsych.data.get().last(1).values()[0].difference
+        var con_right =  avgcon - jsPsych.data.get().last(1).values()[0].difference
+        var trial_contrast = jsPsych.data.get().last(2).values()[0].contrast
+        if (trial_contrast === 0) {
+            if (con_left > con_right) {
+                return `<p> If you choose the image on your <strong> right</strong>, what do you think is the chance of winning a reward? </p>  `
+            }
+            else {
+                return `<p> If you choose the image on your <strong> left</strong>, what do you think is the chance of winning a reward? </p> `
+            }
+        }
+        else {
+            if (con_left > con_right) {
+                return `<p> If you choose the image on your <strong> left</strong>, what do you think is the chance of winning a reward? </p> `
+            }
+            else {
+                return `<p> If you choose the image on your <strong> right</strong>, what do you think is the chance of winning a reward? </p> `
+            }
+        }
+    },
+    on_finish: function (data) {
+        data.contrast_left = jsPsych.currentTrial().contrast_left// stores the contrast level of left patch on this trial
+        data.contrast_right = jsPsych.currentTrial().contrast_right // stores the contrast level of right patch on this trial
+    }
+};
 
 var fb_missed = { // same as var fb but feedback for missed trials
         type: "html-keyboard-response", choices: jsPsych.NO_KEYS, trial_duration: duration, data: {condition: 'feedback_missed'},
@@ -744,8 +751,8 @@ var missed_trial = { // missed trial
             } else if (length === 0) { // if the participant misses the missed trial
                 missed.pop()
                 missed.unshift(1) // Adds to the missed array when the participant fails to respond to a repeated trial.
-                missed_fb.unshift(jsPsych.currentTrial().missed_reward),
-                missed_con.unshift(jsPsych.currentTrial().contrast_left),
+                missed_fb.unshift(jsPsych.currentTrial().missed_reward)
+                missed_con.unshift(jsPsych.currentTrial().contrast_left)
                 missed_con1.unshift(jsPsych.currentTrial().contrast_right)
                 missed_block.unshift(jsPsych.currentTrial().block)
                 missed_contrast.unshift(jsPsych.currentTrial().contrast)
@@ -848,7 +855,7 @@ timeline.push(block_1); timeline.push(nextblock); timeline.push(block_2); timeli
 timeline.push(block_4); timeline.push(nextblock); timeline.push(block_5); timeline.push(nextblock); timeline.push(block_6); timeline.push(nextblock);
 timeline.push(block_7); timeline.push(nextblock); timeline.push(block_8); timeline.push(nextblock); timeline.push(block_9); timeline.push(nextblock);
 timeline.push(block_10); timeline.push(nextblock); timeline.push(block_11); timeline.push(nextblock); timeline.push(block_12); 
-timeline.push(debriefing)
+//timeline.push(debriefing)
 timeline.push(completion_id)
 jsPsych.init({
         timeline: timeline,
