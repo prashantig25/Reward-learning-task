@@ -55,21 +55,34 @@ var hc_lose = {
         prompt: "<p>  Here is another example of feedback after choosing the darker image. <strong> Please note </strong> that although choosing the darker image is supposed to yield 1 point, here you win 0 points. This may happen in some trials of some blocks. Please press any key to proceed if you have understood the instructions. </p>",
         response_ends_trial: true,
     }
-var demo_slider = {
+var demo_slider_red = {
         type: 'image-keyboard-response',
-        stimulus: 'js/demo_slider.png',
+        stimulus: 'demo_slider_red.png',
         stimulus_height: 400,
         stimulus_width: 1100,
-        prompt: "<p>  In the next part of the trial, you will be presented with the <strong> slider </strong> that is displayed above. In this part of the trial, you will be presented with two images of different contrast levels. You will be asked to indicate <strong> the chance (in percent) </strong> with which you think you would win 1 point, if you were to choose a particular image. You should be able to estimate the chance of winning 1 point after a hypothetical choice, based on the feedback of your previous choices. " +
-        "You can indicate your response by clicking on the slider. You can drag through the slider, to adjust your response as you like. Please press any key to proceed if you have understood the instructions. </p>",
+        prompt: "<p>  In the next part of the trial, you will be presented with the <strong> slider </strong> that is displayed above. In this part of the trial, you will be presented with two images of different contrast levels. You will be asked to indicate <strong> the chance (in percent) </strong> with which you think you would win 1 point, if you were to choose the image with the red <strong> border </strong>. You should be able to estimate the chance of winning 1 point after a hypothetical choice, based on the feedback of your previous choices. " +
+        "However, please note that you are <strong> not </strong> allowed to respond with the slider when the border is <strong> red </strong> in color. Please press any key to proceed if you have understood the instructions. </p>",
+        response_ends_trial: true,
+    }
+var demo_slider_green = {
+        type: 'image-keyboard-response',
+        stimulus: 'demo_slider_green.png',
+        stimulus_height: 400,
+        stimulus_width: 1100,
+        prompt: "<p>  In the next part of the trial, you will be presented with the <strong> slider </strong> that is displayed above. Now, the border changes its color from <strong> red </strong> to <strong> green</strong>. You will be asked to indicate <strong> the chance (in percent) </strong> with which you think you would win 1 point, if you were to choose the image with the border. You should be able to estimate the chance of winning 1 point after a hypothetical choice, based on the feedback of your previous choices. " +
+        "You can indicate your response by clicking on the slider. You can drag through the slider, to adjust your response as you like. Please <strong> respond </strong> only when the border is <strong> green </strong> in color. Remuneration for participating in the study is not possible if you don't respond using the slider. Please press any key to proceed if you have understood the instructions. </p>",
         response_ends_trial: true,
     }
 var demo_enter = {
         type: 'image-keyboard-response',
-        stimulus: 'js/enter_trial.png',
-        //stimulus_height: 400,
-        //stimulus_width: 1100,
+        stimulus: 'enter_trial.png',
         prompt: "<p>  After responding with the slider, you will be presented with instructions as shown in the image above. Then, you are required to press the <strong> ENTER </strong> key to proceed to the next trial. Please press any key if you have understood these instructions. </p>",
+        response_ends_trial: true,
+    }
+var incongruent = {
+        type: 'image-keyboard-response',
+        stimulus: 'incongruent.png',
+        prompt: "<p>  <strong> Please note: </strong> that there may be trials where you would win 0 points more often after choosing a certain image and still, you will be asked to estimate the chance of winning 1 point for the same image, with the slider. For instance, in the image above, the brigher image won 0 points but the participant is asked to report the chances of winning 1 point, if the brighter image is chosen. Please press any key if you have understood these instructions. </p>",
         response_ends_trial: true,
     }
 var instructions_phase1 = {
@@ -95,7 +108,6 @@ var instructions_phase3 = {
             " After your response, please click on the <strong> Continue </strong> button to proceed in the task. " +
             "<p> If you have understood these instructions, please press any key to proceed to the experiment.</p>"
   };
-
 var questions = [
         {
             prompt: "Once you have clicked on the slider to respond, how can you use the slider to re-adjust your response to a desired percent level.",
@@ -120,24 +132,24 @@ var questions = [
         {
             prompt: "The percentages on the slider indicate which of the following?",
             options: [
-                "Chances of winning 0 points, based on the hypothetical choice",
-                "Chances of winning 1 point, based on the previous trial's choice",
-                "Chances of winning 2 points",
-                "Chances of winning 1 point, based on the hypothetical choice."
+                "Chances of winning 0 points, if you chose the image with the green border.",
+                "Chances of winning 1 point, if you chose the image with the red border.",
+                "Chances of winning 2 points, if you chose the image with the green border.",
+                "Chances of winning 1 point, if you chose the image with the green border."
             ],
             required: true,
             horizontal: false,
             correct: 3, // which answer is correct?
             reminder: `
     <p style="color:#000000"><strong> The percentages on the slider indicate which of the following? </strong></p>
-    <p style="color:green"><strong>Correct Answer: Chances of winning 1 point, based on the hypothetical choice.</strong></p>
+    <p style="color:green"><strong>Correct Answer: Chances of winning if you chose the image with the green border.</strong></p>
     <p style="color:orangered"><strong>Your answer was incorrect!</strong></p>
-    <p align="justify">The percentages indicate the chances of winning 1 point, if you made the hypothetical choice.</p>
+    <p align="justify">The percentages indicate the chances of winning 1 point, if you chose the image with the border.</p>
     <p>Press <strong><em>SPACE BAR</em></strong> to continue.</p>
     `,
         },
         {
-            prompt: "If you think that the chances of winning 1 point is 70 percent, if you made the hypothetical choice, to which percent label would you drag the slider to? ",
+            prompt: "If you think that the chances of winning 1 point is 70 percent, if you chose the image with the green border, to which percent label would you drag the slider to? ",
             options: [
                 "30%",
                 "60%",
@@ -148,17 +160,52 @@ var questions = [
             correct: 2, // which answer is correct?
             reminder: `
     <p style="color:#000000"><strong>If you think that the chances of winning 1 point is 70 percent, 
-    if you made the hypothetical choice, to which percent label would you drag the slider to? </strong></p>
+    if you chose the image with the green border, to which percent label would you drag the slider to? </strong></p>
     <p style="color:green"><strong>Correct Answer: 70%</strong></p>
     <p style="color:#ff4500"><strong>Your answer was incorrect!</strong></p>
     <p align="justify">If you think that the chances of winning 1 point is 70 percent, please click and drag the slider to the 70% label on the slider. </p>
     <p>Press <strong><em>SPACE BAR</em></strong> to continue.</p>
     `,
         },
+        {
+            prompt: "There may be trials where you win 0 points more often on choosing a certain image and yet, you may be asked to estimate the chances of winning 1 point for the same image using the slider.",
+            options: [
+                "True",
+                "False",
+            ],
+            required: true,
+            horizontal: false,
+            correct: 0, // which answer is correct?
+            reminder: `
+    <p style="color:#000000"><strong>There may be trials where you win 0 points more often on choosing a certain image and yet, you may be asked to estimate the chances of winning 1 point for the same image using the slider.</strong></p>
+    <p style="color:green"><strong>Correct Answer: True</strong></p>
+    <p style="color:#ff4500"><strong>Your answer was incorrect!</strong></p>
+    <p align="justify"> Yes, there may be trials where you win 0 points more often on choosing a certain image and still, you may be asked to estimate the chances of winning 1 point for the same image using the slider. </p>
+    <p>Press <strong><em>SPACE BAR</em></strong> to continue.</p>
+    `,
+        },
+        {
+            prompt: "You are allowed to respond using when the color of the border is",
+            options: [
+                "Red",
+                "Green",
+                "None of the above",
+            ],
+            required: true,
+            horizontal: false,
+            correct: 1, // which answer is correct?
+            reminder: `
+    <p style="color:#000000"><strong>You are allowed to respond using when the color of the border is</strong></p>
+    <p style="color:green"><strong>Correct Answer: Green</strong></p>
+    <p style="color:#ff4500"><strong>Your answer was incorrect!</strong></p>
+    <p align="justify"> Please respond using the slider only when the border is green in color. </p>
+    <p>Press <strong><em>SPACE BAR</em></strong> to continue.</p>
+    `,
+        }
     ]
 // Define how many questions have to be answered correctly to advance
-var nQuestions = 3  // How many questions should be sampled?
-var nCorrectRequired = 3  // How many correct responses before participant can advance?
+var nQuestions = 5  // How many questions should be sampled?
+var nCorrectRequired = 5  // How many correct responses before participant can advance?
 var reminder_pages = [];  // initialize an empty list that will collect reminder pages of incorrect responses
 // Define the first question sample (can be a subset of questions, or all, ...)
 questionSample = jsPsych.randomization.sampleWithoutReplacement(
@@ -228,7 +275,7 @@ var quiz = {
         conditional_function: function(){
             // get the data from the previous trial,
             // and check which key was pressed
-            if(nCorrect === 3){
+            if(nCorrect === 5){
                 return true;
             } else {
                 return false;
@@ -248,7 +295,6 @@ var quiz = {
         ],
 
     };
-
 var demo_timeline = {timeline: [demo, lc_lose, lc_win, hc_win, hc_lose, demo_slider, demo_enter]};
 var instructions = {timeline: [instructions_phase1, instructions_phase2, instructions_phase3]};
 
