@@ -110,7 +110,7 @@ var completion_id = {
     };
 
 var perceptual = { // choice phase with patches belonging to the perceptual condition with low contrast patch winning more often.
-        type: 'canvas-keyboard-response',
+        type: 'canvas-keyboard-multiple-response',
         stimulus: gabor, // generates the two patches for the trial using the gabor function
         data: {condition: 'perceptual_lc'}, // data stored for this trial
         choices: keys, response_ends_trial: false, trial_duration: duration,
@@ -137,10 +137,12 @@ var perceptual = { // choice phase with patches belonging to the perceptual cond
             perceptual.contrast = 0; // 0 = low contrast, 1 = high contrast
         },
         on_finish: function (data) { // data stored after the trial is finished
-            if (data.response === jsPsych.currentTrial().reward) { // if the participant's key press is the same as the correct key_press
+            var response = data.response // responses for a trial
+            var length = response.length // calculates the length of the response array
+            if (data.response[length-1] === jsPsych.currentTrial().reward) { // if the participant's latest key press is the same as the correct key_press
                 data.correct = true;
                 data.stim = 0; // keeps the stim value at 0 because the participant has not missed a trial
-            } else if (data.response === null) { // if the participant does not respond to a particular trial
+            } else if (length === 0) { // if the participant does not respond to a particular trial
                     missed.push(1), // increases a missed trial by 1
                     missed_fb.push(jsPsych.currentTrial().reward),  // add this trial's correct response to the missed_fb array so that it can be repeated with the missed trial
                     missed_con.push(jsPsych.currentTrial().contrast_left), // add this trial's left contrast to the missed_con array so that it can be repeated with the missed trial
@@ -164,7 +166,7 @@ var perceptual = { // choice phase with patches belonging to the perceptual cond
         }
     };
 var perceptual_1 = { // choice phase with patches belonging to the perceptual condition with high contrast patch winning more often.
-        type: 'canvas-keyboard-response',
+        type: 'canvas-keyboard-multiple-response',
         stimulus: gabor, // generates the two patches for the trial using the gabor function
         data: {condition: 'perceptual_hc'}, // data stored for this trial
         choices: keys, response_ends_trial: false, trial_duration: duration,
@@ -191,10 +193,12 @@ var perceptual_1 = { // choice phase with patches belonging to the perceptual co
             perceptual_1.contrast = 1;
         },
         on_finish: function (data) {
-            if (data.response === jsPsych.currentTrial().reward) {
+            var response = data.response
+            var length = response.length
+            if (data.response[length-1] === jsPsych.currentTrial().reward) {
                 data.correct = true;
                 data.stim = 0;
-            } else if (data.response === null) {
+            } else if (length === 0) {
                 missed.push(1),
                     missed_fb.push(jsPsych.currentTrial().reward),
                     missed_con.push(jsPsych.currentTrial().contrast_left),
@@ -218,7 +222,7 @@ var perceptual_1 = { // choice phase with patches belonging to the perceptual co
         }
     };
 var reward = { // choice phase with patches belonging to the reward condition with low contrast patch winning more often.
-        type: 'canvas-keyboard-response',
+        type: 'canvas-keyboard-multiple-response',
         stimulus: gabor, // generates the two patches for the trial using the gabor function
         data: {condition: 'reward_lc'}, // data stored for this trial
         choices: keys, response_ends_trial: false, trial_duration: duration,
@@ -245,10 +249,12 @@ var reward = { // choice phase with patches belonging to the reward condition wi
             reward.contrast = 0
         },
         on_finish: function (data) {
-            if (data.response === jsPsych.currentTrial().reward) {
+            var response = data.response
+            var length = response.length
+            if (data.response[length-1] === jsPsych.currentTrial().reward) {
                 data.correct = true;
                 data.stim = 0;
-            } else if (data.response === null) {
+            } else if (length === 0) {
                 missed.push(1),
                     missed_fb.push(jsPsych.currentTrial().reward),
                     missed_con.push(jsPsych.currentTrial().contrast_left),
@@ -272,7 +278,7 @@ var reward = { // choice phase with patches belonging to the reward condition wi
         }
     };
 var reward_1 = { // choice phase with patches belonging to the reward condition with high contrast patch winning more often.
-        type: 'canvas-keyboard-response',
+        type: 'canvas-keyboard-multiple-response',
         stimulus: gabor, // generates the two patches for the trial using the gabor function
         data: {condition: 'reward_hc'}, // data stored for this trial
         choices: keys, response_ends_trial: false, trial_duration: duration,
@@ -299,10 +305,12 @@ var reward_1 = { // choice phase with patches belonging to the reward condition 
             reward_1.contrast = 1;
         },
         on_finish: function (data) {
-            if (data.response === jsPsych.currentTrial().reward) {
+            var response = data.response
+            var length = response.length
+            if (data.response[length-1] === jsPsych.currentTrial().reward) {
                 data.correct = true;
                 data.stim = 0;
-            } else if (data.response === null) {
+            } else if (length === 0) {
                 missed.push(1),
                     missed_fb.push(jsPsych.currentTrial().reward),
                     missed_con.push(jsPsych.currentTrial().contrast_left),
@@ -326,7 +334,7 @@ var reward_1 = { // choice phase with patches belonging to the reward condition 
         }
     };
 var mixed = { // choice phase with patches belonging to the mixed condition with low contrast patch winning more often.
-        type: 'canvas-keyboard-response',
+        type: 'canvas-keyboard-multiple-response',
         stimulus: gabor, // generates the two patches for the trial using the gabor function
         data: {condition: 'mixed_lc'}, // data stored for this trial
         choices: keys, response_ends_trial: false, trial_duration: duration,
@@ -353,10 +361,12 @@ var mixed = { // choice phase with patches belonging to the mixed condition with
             mixed.contrast = 0;
         },
         on_finish: function (data) {
-            if (data.response === jsPsych.currentTrial().reward) {
+            var response = data.response
+            var length = response.length
+            if (data.response[length-1] === jsPsych.currentTrial().reward) {
                 data.correct = true;
                 data.stim = 0;
-            } else if (data.response === null) {
+            } else if (length === 0) {
                 missed.push(1),
                     missed_fb.push(jsPsych.currentTrial().reward),
                     missed_con.push(jsPsych.currentTrial().contrast_left),
@@ -380,7 +390,7 @@ var mixed = { // choice phase with patches belonging to the mixed condition with
         }
     };
 var mixed_1 = { // choice phase with patches belonging to the mixed condition with high contrast patch winning more often.
-        type: 'canvas-keyboard-response',
+        type: 'canvas-keyboard-multiple-response',
         stimulus: gabor, // generates the two patches for the trial using the gabor function
         data: {condition: 'mixed_hc'}, // data stored for this trial
         choices: keys, response_ends_trial: false, trial_duration: duration,
@@ -407,10 +417,12 @@ var mixed_1 = { // choice phase with patches belonging to the mixed condition wi
             mixed_1.contrast = 1;
         },
         on_finish: function (data) {
-            if (data.response === jsPsych.currentTrial().reward) {
+            var response = data.response
+            var length = response.length
+            if (data.response[length-1] === jsPsych.currentTrial().reward) {
                 data.correct = true;
                 data.stim = 0;
-            } else if (data.response === null) {
+            } else if (length === 0) {
                 missed.push(1),
                     missed_fb.push(jsPsych.currentTrial().reward),
                     missed_con.push(jsPsych.currentTrial().contrast_left),
@@ -436,12 +448,12 @@ var mixed_1 = { // choice phase with patches belonging to the mixed condition wi
 var mu = { // part of the trial with the slider; congruent slider trial i.e. the most rewarded patch in the trial phase is used for mu estimates
       type: 'canvas-slider-response', // plugin required to present participants with slider
       canvas_size: [300, 500], // size of the canvas
-      data: {condition: 'mu_congruent'}, // 
+      data: {condition: 'mu_congruent'}, 
       stimulus: gabor_mu, // canvas object
-      response_ends_trial: true, 
-      require_movement: false,
+      response_ends_trial: true, // trial ends as soon as participant responds
+      require_movement: false, 
       trial_duration: 6000,
-      labels: ['0%','25%', '50%', '75%', '100%'],
+      labels: ['0%','25%', '50%', '75%', '100%'], // labels on the slider
       on_start: function(mu) { // variables required for the trial; calculated at the start of the trial.
             document.body.style.cursor = "auto"; // to hide the cursor
             var trial_contrast = jsPsych.data.get().last(3).values()[0].contrast // contrast of the patch that is going to be used for mu estimates
@@ -492,7 +504,7 @@ var mu = { // part of the trial with the slider; congruent slider trial i.e. the
             data.state = s[jsPsych.currentTrial().index_mu] // state that the patches in the slider phase belonged to
         }
     };
-var mu_wait = { // slider with no prticipant responses allowed for congruent slider trial i.e. the more rewarded patch in the trial phase is used for mu estimates
+var mu_wait = { // slider with no participant responses allowed for congruent slider trial i.e. the more rewarded patch in the trial phase is used for mu estimates
       type: 'canvas-slider-response',
       canvas_size: [300, 500],
       data: {condition: 'mu_congruent_wait'},
@@ -523,6 +535,10 @@ var mu_wait = { // slider with no prticipant responses allowed for congruent sli
                }
             }
       },
+      on_load: function () { // to disable the slider for the wait period
+    var slider = document.getElementsByTagName('input')[0];
+    slider.disabled = true;
+  },
       prompt: function () {
         var con_left = avgcon + jsPsych.data.get().last(1).values()[0].difference
         var con_right =  avgcon - jsPsych.data.get().last(1).values()[0].difference
@@ -640,6 +656,10 @@ var mu_wait_1 = { // slider with no prticipant responses allowed for incongruent
                }
             }
       },
+      on_load: function () {
+    var slider = document.getElementsByTagName('input')[0];
+    slider.disabled = true;
+      },
       prompt: function () {
         var con_left = avgcon + jsPsych.data.get().last(1).values()[0].difference
         var con_right =  avgcon - jsPsych.data.get().last(1).values()[0].difference
@@ -682,18 +702,18 @@ var fb_missed = { // same as var fb but feedback for missed trials
           var blocktype = jsPsych.data.get().last(2).values()[0].block
           if ( blocktype === 1 || blocktype === 2) {
             if (s_mu[data.index] === 0) { // state that the trial belongs to
-                data.difference = high_min_neg // contrast differences for s = 0
+                data.difference = -0.15 // contrast differences for s = 0
             }
             else {
-                data.difference = high_max
+                data.difference = 0.15
             }
           }
           else {
               if (s_mu[data.index] === 0) { // state that the trial belongs to
-                data.difference = low_min_neg// contrast differences for s = 0
+                data.difference = -0.45// contrast differences for s = 0
               }
               else {
-                data.difference = low_max
+                data.difference = 0.45
               }
             }
           
@@ -703,7 +723,7 @@ var fb_missed = { // same as var fb but feedback for missed trials
     };
 
 var missed_trial = { // missed trial
-        type: 'canvas-keyboard-response', //jsPsych trial type
+        type: 'canvas-keyboard-multiple-response', //jsPsych trial type
         stimulus: gabor, // gabor drawn based on function
         data: {condition: 'missed'}, // condition of this trial
         choices: keys, response_ends_trial: false, trial_duration: duration,
@@ -716,10 +736,12 @@ var missed_trial = { // missed trial
             missed_trial.block = missed_block.shift() // stores the correct block type for the first missed trial in the missed trial array
         },
         on_finish: function (data) {
-            if (data.response === jsPsych.currentTrial().missed_reward) {
+            var response = data.response
+            var length = response.length
+            if (data.response[length-1] === jsPsych.currentTrial().missed_reward) {
                 data.correct = true;
                 missed.pop(); // Once the missed trial has been repeated and the participant has responded, the length of the missed array has to be reduced by 1.
-            } else if (data.response === null) { // if the participant misses the missed trial
+            } else if (length === 0) { // if the participant misses the missed trial
                 missed.pop()
                 missed.unshift(1) // Adds to the missed array when the participant fails to respond to a repeated trial.
                 missed_fb.unshift(jsPsych.currentTrial().missed_reward),
@@ -784,7 +806,7 @@ var missed_conditional_1 = { // first runs the conditional to check if the misse
                 return false;
             }
         }
-    };    
+    };       
 var trial_perceptual = {timeline: [fix, perceptual, fb, mu_wait, mu, enter_trial], repetitions: 25, randomize_order: false};
 var trial_perceptual_1 = {timeline: [fix, perceptual_1, fb, mu_wait, mu, enter_trial], repetitions: 25, randomize_order: false};
 var trial_reward = {timeline: [fix, reward, fb, mu_wait,mu, enter_trial], repetitions: 25, randomize_order: false};
