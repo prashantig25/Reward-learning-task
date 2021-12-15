@@ -33,7 +33,7 @@ var lc_lose = {
         type: 'image-keyboard-response',
         stimulus: 'js/0.5_green.png',
         prompt: "<p> After the images are presented to you, you are required to select one of them. Depending on the image you choose in a trial, you will get different types of feedback. On each block of trials, there is a relationship between the contrast (brightness) level of the image and how often you will win 1 point if you choose that image. " +
-            "For example, on some blocks of trials, the image with higher contrast (brightness) is associated with winning 1 point, while in another block of trials, the relationship may be reversed. <br> In the above example, feedback is presented after choosing the lighter image. In this block of trials, the underlying relationship is that the lighter images are more often rewarding. <br> In this case, you would win 1 point on choosing the lighter image more often and 0 points on choosing the darker image. However, <strong> please note </strong> that you will not necessarily win 1 point when choosing the lighter image in this block. That is, there may be trials in a block in which you win 0 points even after choosing the correct image. Please press any key to proceed if you have understood these instructions. </p>",
+            "For example, on some blocks of trials, the image with higher contrast (brightness) is associated with winning 1 point, while in another block of trials, the relationship may be reversed. <br> In the above example, feedback is presented after choosing the lighter image. In this block of trials, the underlying relationship is that the lighter images are often more rewarding. <br> In this case, you would win 1 point on choosing the lighter image more often and 0 points on choosing the darker image. However, <strong> please note </strong> that you will not necessarily win 1 point when choosing the lighter image in this block. That is, there may be trials in a block in which you win 0 points even after choosing the correct image. Please press any key to proceed if you have understood these instructions. </p>",
     }
 var lc_win = {
         type: 'image-keyboard-response',
@@ -78,7 +78,7 @@ var demo_enter = {
 var incongruent = {
         type: 'image-keyboard-response',
         stimulus: 'js/incongruent.png',
-        prompt: "<p>  <strong> Please note: </strong> that there may be trials where you would win 0 points more often after choosing a certain image and still, you will be asked to estimate the chance of winning 1 point for the same image, with the slider. For instance, in the image above, the brigher image won 0 points but the participant is asked to report the chances of winning 1 point, if the brighter image is chosen. Please press any key if you have understood these instructions. </p>",
+        prompt: "<p>  <strong> Please note: </strong> that there may be trials where you would win 0 points more often after choosing a certain image and still, you will be asked to estimate the chance of winning 1 point for the same image, with the slider. For instance, in the image above, the brighter image won 0 points but the participant is asked to report the chances of winning 1 point, if the brighter image is chosen. Please press any key if you have understood these instructions. </p>",
         response_ends_trial: true,
     }
 var instructions_phase1 = {
@@ -98,9 +98,10 @@ var instructions_phase2 = {
     };
 var instructions_phase3 = {
         type: "html-keyboard-response", stimulus: "<p style=\"font-size: 20px;color: #000000\"> Here is a summary on how to use the slider in the task.</p>" +
-            "<p> Once you make a choice and receive feedback, you will be presented with a slider that ranges between 0 to 100 percent/ "+
-            "Again, you will be presented with two images. Both images may have different levels of contrast (i.e. brightness) on each trial. Additionally, you will be presented with a hypothetical choice that you could have made. "+
-            "<br> <p> Based on this hypothetical choice scenario, you are expected to indicate the chances with which you can win 1 point on the scale of 0 to 100 percent. <br> To select the chance, you can drag the slider based on the labels of the slider. You could also directly click on the slider above a particular percent to respond. </p><br>"+
+            "<p> Once you make a choice and receive feedback, you will be presented with a slider that ranges between 0 to 100 percent. "+
+            "Again, you will be presented with two images. Both images may have different levels of contrast (i.e. brightness) on each trial. " + 
+            "Additionally, one of these two images will have a border. You have to assume that you have hypothetically chosen that image with the border."+
+            "<br> <p> Based on this hypothetical choice scenario, you are expected to indicate the chance with which you think you can win 1 point on the scale of 0 to 100 percent. Please make the response only when the color of the border changes from red to green. <br> To select the chance, you can drag the slider based on the labels of the slider. You could also directly click on the slider above a particular percent to respond. </p><br>"+
             " After your response, please click on the <strong> Continue </strong> button to proceed in the task. " +
             "<p> If you have understood these instructions, please press any key to proceed to the experiment.</p>"
   };
