@@ -78,7 +78,7 @@ jsPsych.plugins["canvas-keyboard-multiple-response"] = (function () {
     let c = document.getElementById("jspsych-canvas-stimulus")
     trial.stimulus(c)
     // store response
-    var response = {
+    var response = { // to record multiple responses
       rt: [],
       key: []
     };
